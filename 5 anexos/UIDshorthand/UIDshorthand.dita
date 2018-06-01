@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_kvr_3rm_ldb">
+    <title>UID shorthand</title>
+    <body>
+        <p>UIDs are large (up to 64 characters) and computationaly not very efficient. They use 11
+            codes whereas a byte  supports up to 256.</p>
+        <p>At first sight, it is posible to fit two UID characters in one byte (11x11=121).</p>
+        <p>We designed an algorithm which does that, using as a result only characters representable
+            in ISO latin1 <xref href="https://en.wikipedia.org/wiki/ISO/IEC_8859-1" format="html" scope="external"/> , in order the result be visible and posibly clasified with
+            string clasification methods.</p>
+        <section id="section_crk_jwp_ldb">
+            <title>Algorithm</title>
+            <p>
+                <ul id="ul_lrv_lwp_ldb">
+                    <li>a sequence of UIDs is made of UIDs joined by the character ISO latin1 , 0x2C
+                        (which is a sub+delim in the RFC3986)</li>
+                    <li>an UID has an even number of UID codes<ul id="ul_vtt_1xp_ldb">
+                            <li>if necessary, a padding code - is added al final o the UID to make
+                                it even (instead of the often problematic 0x00 defined in part 5 of
+                                the DICOM standard).</li>
+                        </ul></li>
+                    <li>the ascending order of UID codes for clasification is ,-.0123456789 ( 0x2C,
+                        0x2D , 0x2E and 0x30 to 0x39)<ul id="ul_ong_d4q_zdb">
+                            <li>1.2- comes before 1.2.1-</li>
+                            <li>1.23,1.12345 comes before 1.2345</li>
+                        </ul></li>
+                    <li>the clasification is prserved in the resulting shorthand codification.</li>
+                    <li>conversion tables between UID pair of characters and latin1 character are
+                        used</li>
+                </ul>
+            </p>
+        </section>
+        <section id="section_ufm_mcb_mdb">
+            <title>Conversion</title>
+            <p>The design of the conversion table is based on the following criterias:</p>
+            <p>
+                <ul id="ul_ixg_hdb_mdb">
+                    <li>use of "representable" ISO LATIN1 character only, with the exception of "
+                        and \ which convey special behaviour as delimiter and escape char.</li>
+                    <li>use of a matrix 12*12 in which the first UID character is represented by a
+                        row and the second by a column. This subdivides the added semantics of the
+                        LATIN1 characters into codes found in bits 4-7 and 0-3 for UID chars 0 and 1
+                        respectively.</li>
+                    <li>the mapping follows the ascending order of char0 and in second instance the
+                        ascending order of char1, so that a clasification of the LATIN1 char is
+                        equivalent to the clasification of the UID characters combined.</li>
+                    <li>The following pairs of UID char don't follow the syntax of the UID shorthand
+                        and should be descarted:<ul id="ul_v5h_hnb_mdb">
+                            <li>.. dots without number inbetween is not allowed in UID syntax</li>
+                            <li>.- an UID can not end with a dot</li>
+                            <li>-* the padding character cannot be followed by any other
+                                character.</li>
+                        </ul></li>
+                </ul>
+            </p>
+            <p>
+                <simpletable frame="all" relcolwidth="1* 1* 1* 1* 1* 1* 1* 1* 1* 1* 1* 1* 1* 1* 1* 1* 1*" id="simpletable_ywc_yj5_ldb">
+                    <strow>
+                        <stentry/>
+                        <stentry>_-</stentry>
+                        <stentry>_.</stentry>
+                        <stentry>2</stentry>
+                        <stentry>_0</stentry>
+                        <stentry>_1</stentry>
+                        <stentry>_2</stentry>
+                        <stentry>_3</stentry>
+                        <stentry>_4</stentry>
+                        <stentry>_5</stentry>
+                        <stentry>_6</stentry>
+                        <stentry>_7</stentry>
+                        <stentry>_8</stentry>
+                        <stentry>C</stentry>
+                        <stentry>D</stentry>
+                        <stentry>_9</stentry>
+                        <stentry>F</stentry>
+                    </strow>
+                    <strow>
+                        <stentry>0</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>1</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>-_</stentry>
+                        <stentry/>
+                        <stentry>,</stentry><?oxy_custom_end?>
+                        <stentry/>
+                        <stentry>#</stentry>
+                        <stentry>$</stentry>
+                        <stentry>%</stentry>
+                        <stentry>&amp;</stentry>
+                        <stentry>'</stentry>
+                        <stentry>(</stentry>
+                        <stentry>)</stentry>
+                        <stentry>*</stentry>
+                        <stentry>+</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry>.</stentry>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>._</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>0_</stentry>
+                        <stentry>@</stentry>
+                        <stentry>A</stentry>
+                        <stentry/>
+                        <stentry>C</stentry>
+                        <stentry>D</stentry>
+                        <stentry>E</stentry>
+                        <stentry>F</stentry>
+                        <stentry>G</stentry>
+                        <stentry>H</stentry>
+                        <stentry>I</stentry>
+                        <stentry>J</stentry>
+                        <stentry>K</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry>N</stentry>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>1_</stentry>
+                        <stentry>P</stentry>
+                        <stentry>Q</stentry>
+                        <stentry/>
+                        <stentry>S</stentry>
+                        <stentry>T</stentry>
+                        <stentry>U</stentry>
+                        <stentry>V</stentry>
+                        <stentry>W</stentry>
+                        <stentry>X</stentry>
+                        <stentry>Y</stentry>
+                        <stentry>Z</stentry>
+                        <stentry>[</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry>^</stentry>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>2_</stentry>
+                        <stentry>`</stentry>
+                        <stentry>a</stentry>
+                        <stentry/>
+                        <stentry>c</stentry>
+                        <stentry>d</stentry>
+                        <stentry>e</stentry>
+                        <stentry>f</stentry>
+                        <stentry>g</stentry>
+                        <stentry>h</stentry>
+                        <stentry>i</stentry>
+                        <stentry>j</stentry>
+                        <stentry>k</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry>n</stentry>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>3_</stentry>
+                        <stentry>p</stentry>
+                        <stentry>q</stentry>
+                        <stentry/>
+                        <stentry>s</stentry>
+                        <stentry>t</stentry>
+                        <stentry>u</stentry>
+                        <stentry>v</stentry>
+                        <stentry>w</stentry>
+                        <stentry>x</stentry>
+                        <stentry>y</stentry>
+                        <stentry>z</stentry>
+                        <stentry>{</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry>~</stentry>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>8</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>9</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>4_</stentry>
+                        <stentry>NBS</stentry>
+                        <stentry>¡</stentry>
+                        <stentry/>
+                        <stentry>£</stentry>
+                        <stentry>¤</stentry>
+                        <stentry>¥</stentry>
+                        <stentry>¦</stentry>
+                        <stentry>§</stentry>
+                        <stentry>¨</stentry>
+                        <stentry>©</stentry>
+                        <stentry>ª</stentry>
+                        <stentry>«</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry>®</stentry>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>5_</stentry>
+                        <stentry>°</stentry>
+                        <stentry>±</stentry>
+                        <stentry/>
+                        <stentry>³</stentry>
+                        <stentry>´</stentry>
+                        <stentry>µ</stentry>
+                        <stentry>¶</stentry>
+                        <stentry>·</stentry>
+                        <stentry>¸</stentry>
+                        <stentry>¹</stentry>
+                        <stentry>º</stentry>
+                        <stentry>»</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry>¾</stentry>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>6_</stentry>
+                        <stentry>À</stentry>
+                        <stentry>Á</stentry>
+                        <stentry/>
+                        <stentry>Ã</stentry>
+                        <stentry>Ä</stentry>
+                        <stentry>Å</stentry>
+                        <stentry>Æ</stentry>
+                        <stentry>Ç</stentry>
+                        <stentry>È</stentry>
+                        <stentry>É</stentry>
+                        <stentry>Ê</stentry>
+                        <stentry>Ë</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry>Î</stentry>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>7_</stentry>
+                        <stentry>Ð</stentry>
+                        <stentry>Ñ</stentry>
+                        <stentry/>
+                        <stentry>Ó</stentry>
+                        <stentry>Ô</stentry>
+                        <stentry>Õ</stentry>
+                        <stentry>Ö</stentry>
+                        <stentry>×</stentry>
+                        <stentry>Ø</stentry>
+                        <stentry>Ù</stentry>
+                        <stentry>Ú</stentry>
+                        <stentry>Û</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry>Þ</stentry>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>8_</stentry>
+                        <stentry>à</stentry>
+                        <stentry>á</stentry>
+                        <stentry/>
+                        <stentry>ã</stentry>
+                        <stentry>ä</stentry>
+                        <stentry>å</stentry>
+                        <stentry>æ</stentry>
+                        <stentry>ç</stentry>
+                        <stentry>è</stentry>
+                        <stentry>é</stentry>
+                        <stentry>ê</stentry>
+                        <stentry>ë</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry>î</stentry>
+                        <stentry/>
+                    </strow>
+                    <strow>
+                        <stentry>9_</stentry>
+                        <stentry>ð</stentry>
+                        <stentry>ñ</stentry>
+                        <stentry/>
+                        <stentry>ó</stentry>
+                        <stentry>ô</stentry>
+                        <stentry>õ</stentry>
+                        <stentry>ö</stentry>
+                        <stentry>÷</stentry>
+                        <stentry>ø</stentry>
+                        <stentry>ù</stentry>
+                        <stentry>ú</stentry>
+                        <stentry>û</stentry>
+                        <stentry/>
+                        <stentry/>
+                        <stentry>þ</stentry>
+                        <stentry/>
+                    </strow>
+                </simpletable>
+            </p>
+        </section>
+        <section id="section_wbm_5g5_ldb">
+            <title>To UID shorthand</title>
+            <p>
+                <ol id="ol_amq_vg5_ldb">
+                    <li>add eventually an - to make the UID code sequence even</li>
+                    <li>repeat for each group of two codes<ol id="ol_vld_3cb_mdb">
+                            <li>use a two entry conversion table which outputs the LATIN1 char</li>
+                        </ol></li>
+                    <li>if there are other UIDs to append<ol id="ol_ocr_shv_ldb">
+                            <li>add the LATIN1 char , 0x2C</li>
+                            <li>repeat operations 1 and 2 on the next UID</li>
+                        </ol></li>
+                </ol>
+            </p>
+        </section>
+        <section id="section_vsq_ghv_ldb">
+            <title>From UID shorthand sequence</title>
+            <p>
+                <ol id="ol_fpw_khv_ldb">
+                    <li>separate the shorthand UID sequence into an array of single shorthand UIDs
+                        thanks to the separator LATIN1 char , 0x2C</li>
+                    <li>repeat for each character of the shorthand UID<ol id="ol_l3k_c3v_ldb">
+                            <li>use a one entry conversion table which outputs automatically a one
+                                or two char string</li>
+                        </ol></li>
+                </ol>
+            </p>
+        </section>
+    </body>
+</topic>

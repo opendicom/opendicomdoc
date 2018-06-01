@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_prg_rwc_kdb">
+    <title>FLAT IMPLICIT DICOM JSON INSTANCE (FIDJI)</title>
+    <body>
+        <section id="section_enq_l4j_kdb">
+            <title>Background</title>
+            <p>The DICOM metadata format improves the basic key/value paradigma both in the axis of
+                multivalued attributes and the axis of recursivity of composition.  A traduction of
+                the model into XML opened up a discrete access to specific metadata thanks to XPATH.
+                Yet another traduction of the model into JSON simplified the parsing of subsets of
+                metadata in QIDO responses.</p>
+            <p>Both the XML and JSON traductions were derived from the explicit binary syntaxis,
+                wich implies:</p>
+            <p>
+                <ol id="ol_vs5_d1d_kdb">
+                    <li>encapsulated datasets</li>
+                    <li>multivalued attributes</li>
+                    <li>comunication of the datatype of each attribute</li>
+                </ol>
+            </p>
+            <p>(1) and (2) are implemented with XML sequences and JSON arrays. (3) is implemented
+                with XML attributes and an additional layer of JSON object description. These
+                constraints are counter productive for data analysis tasks (for instance machine
+                learning), which are performed  more easily on flat datasets.</p>
+        </section>
+        <section id="section_j4y_44j_kdb">
+            <title>Description of the FIDJI format </title>
+            <p>This is why we designed yet another DICOM JSON format we called FIDJI (FLAT IMPLICIT
+                DICOM JSON INSTANCE) :</p>
+            <p>
+                <ul id="ul_lqf_pcd_kdb">
+                    <li>FLAT means a list of key/value where  value is neither an JSON array nor a
+                        JSON object containing a sequence of DICOM atributes</li>
+                    <li>IMPLICIT means that attribute's keyword and datatype are left outside of the
+                        format. The Dictionary found in Part 6 of the DICOM standard, with eventual
+                        private extensions deal with these specifics.</li>
+                    <li>DICOM refers the same modelization shared by the already existing BINARY,
+                        XML and JSON representations, with the corollary that it is posible to
+                        translate FIDJI from and to any of the other representations.</li>
+                    <li>JSON is the core grammar used. JSON is easier to parse than XML and easy to
+                        search when the objects are only one level deep, because most languages
+                        contain functions to work on maps (key value lists)</li>
+                    <li>INSTANCE (singular) indicates that the format gathers metadata for a unique
+                        SOP Instance (fully or partially represented). A DICOM Study would be
+                        represented by a set of FIDJI objects.</li>
+                </ul>
+            </p>
+        </section>
+        <section id="section_qgj_kfd_kdb">
+            <title>Specifics</title>
+            <p>
+                <ul id="ul_nc3_zgd_kdb">
+                    <li>encapsulated attributes are treated in accordance to the DICOM QIDO
+                        parameter format, which defines aaaaaaaa.bbbbbbbb as the attribute designed
+                        by tag bbbbbbbb included in the (first) item of sequence designed by tag
+                            aaaaaaaa.<ul id="ul_fk4_gyh_xdb">
+                            <li>in QIDO syntaxis, tags and corresponding keyword are
+                                interchangeable. In FIDJI, as in DICOM JSON, tags only are
+                                used.</li>
+                        </ul></li>
+                    <li>aaaaaaaa.bbbbbbbb represents the complex concept of the attribute, but not
+                        its place within an item o a list of values. We append the latter
+                        information with a _ (underscore) after the conceptual part. For instance
+                        aaaaaaaa.bbbbbbbb_2.1 means the first value of attribute bbbbbbbb of item 2
+                        of the sequence aaaaaaaa.</li>
+                    <li>in many cases the sequence contains a unique item containing a monovalued
+                        attribute. In theses cases, the appendice can be omitted. For instance
+                        aaaaaaaa.bbbbbbbb equals aaaaaaaa.bbbbbbbb_1.1</li>
+                </ul>
+                <ul id="ul_ejm_gkd_kdb">
+                    <li>value formats follow <b>Table F.2.3-1. DICOM VR to JSON Data Type
+                            Mapping</b> of the DICOM standard, with two exceptions:<ul
+                            id="ul_bvn_2w2_kdb">
+                            <li> PN, which components are represented in only one string made of
+                                segments separated by ^ and =</li>
+                            <li>the only SQ attribute to be represented is the empty one, using JSON
+                                null as its value.</li>
+                        </ul></li>
+                    <li>when it is better to access binary fields by reference than coded base64, we
+                        use a JSON object as value. This object contains a "url" key and eventually
+                        other keys usefull for a request.</li>
+                </ul>
+            </p>
+        </section>
+        <section id="section_vmd_dfj_kdb">
+            <title>Example</title>
+            <p>The first item of the example of QIDO-RS Search For Studies found in <xref
+                    href="http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_F.2.4"
+                    format="html" scope="external"/> would be written in FIDJI as follows:</p>
+            <p>[</p>
+            <p> {</p>
+            <p> "00080005": "ISO_IR 192",</p>
+            <p> "00080020": "20130409",</p>
+            <p> "00080030": "131600.0000",</p>
+            <p> "00080050": "11235813",</p>
+            <p> "00080056": "ONLINE",</p>
+            <p>
+                <b>"00080061_1": "CT",</b></p>
+            <p><b> "00080061_2": "PET",</b></p>
+            <p> "00080090": "^Bob^^Dr.",</p>
+            <p> "00081190":
+                "http://wado.nema.org/studies/1.2.392.200036.9116.2.2.2.1762893313.1029997326.945873",</p>
+            <p> "00090010": "Vendor A",</p>
+            <p> "00091002": "z0x9c8v7",</p>
+            <p>
+                <b>"00100010": "Wang^XiaoDong=王^小東",</b></p>
+            <p> "00100020": "12345",</p>
+            <p> "00100021": "Hospital A",</p>
+            <p> "00100030": "19670701",</p>
+            <p> "00100040": "M",</p>
+            <p><b> "00101002.00100020_1.1": "54321",</b></p>
+            <p><b> "00101002.00100020_2.1": "24680",</b></p>
+            <p><b> "00101002.00100021_1.1": "Hospital B",</b></p>
+            <p><b> "00101002.00100021_2.1": "Hospital C",</b></p>
+            <p> "0020000D": "1.2.392.200036.9116.2.2.2.1762893313.1029997326.945873",</p>
+            <p> "00200010": "11235813",</p>
+            <p> "00201206": 4,</p>
+            <p> "00201208": 942</p>
+            <p> }</p>
+            <p>]</p>
+        </section>
+        <section id="section_txw_1qj_kdb">
+            <title>Evaluation</title>
+            <p>
+                <ul id="ul_c3m_lqj_kdb">
+                    <li>more compact than dicom json</li>
+                    <li>easier to parse than dicom json</li>
+                    <li>more searchable than dicom json</li>
+                    <li>could be used as storage format, eventually in nosql databases in order to
+                        avoid the duplication of the information with a copy of the raw objects into
+                        a repository and a copy of selected metadata into a registry</li>
+                    <li>usefull for optimized machine learning analysis</li>
+                </ul>
+            </p>
+        </section>
+    </body>
+</topic>
