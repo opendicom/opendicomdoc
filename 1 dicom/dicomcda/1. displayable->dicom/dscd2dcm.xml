@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<param>
+    <urld>scd2dscd_output.xml</urld>
+    <institucion>Policial</institucion>
+    <studyuid>2.16.858.2.10004772.67430.20141124081658.1.1234</studyuid>
+    <rrturl>xsl_.xml</rrturl>
+    <NativeDicomModel xml:space="preserve">
+        <DicomAttribute keyword="SpecificCharacterSet" tag="00080005" vr="CS"><Value number="1">ISO_IR 100</Value></DicomAttribute>
+        <DicomAttribute keyword="StudyDate" tag="00080020" vr="DA"><Value number="1">20070118</Value></DicomAttribute>
+        <DicomAttribute keyword="StudyTime" tag="00080030" vr="TM"><Value number="1">103318</Value></DicomAttribute>
+        <DicomAttribute keyword="AccessionNumber" tag="00080050" vr="SH"/>
+        <DicomAttribute keyword="RetrieveAETitle" tag="00080054" vr="AE"><Value number="1">DCM4CHEE</Value></DicomAttribute>
+        <DicomAttribute keyword="InstanceAvailability" tag="00080056" vr="CS"><Value number="1">ONLINE</Value></DicomAttribute>
+        <DicomAttribute keyword="ModalitiesInStudy" tag="00080061" vr="CS"><Value number="1">CT</Value></DicomAttribute>
+        <DicomAttribute keyword="ReferringPhysicianName" tag="00080090" vr="PN"/>
+        <DicomAttribute keyword="RetrieveURL" tag="00081190" vr="UT"><Value number="1">http://190.64.48.21:8080/dcm4chee-arc/wado/DCM4CHEE/studies/2.16.858.2.10004772.67430.20141124081658.1.1234</Value></DicomAttribute>
+        <DicomAttribute keyword="PatientName" tag="00100010" vr="PN"><PersonName number="1"><Alphabetic><FamilyName>Fauquex</FamilyName><MiddleName>Jacques</MiddleName></Alphabetic></PersonName></DicomAttribute>
+        <DicomAttribute keyword="PatientID" tag="00100020" vr="LO"><Value number="1">50637300</Value></DicomAttribute>
+        <DicomAttribute keyword="PatientBirthDate" tag="00100030" vr="DA"><Value number="1">1065-01-23</Value></DicomAttribute>
+        <DicomAttribute keyword="PatientSex" tag="00100040" vr="CS"><Value number="1">M</Value></DicomAttribute>
+        <DicomAttribute keyword="StudyInstanceUID" tag="0020000D" vr="UI"><Value number="1">2.16.858.2.10004772.67430.20141124081658.1.1234</Value></DicomAttribute>
+        <DicomAttribute keyword="StudyID" tag="00200010" vr="SH"/>
+        <DicomAttribute keyword="NumberOfStudyRelatedSeries" tag="00201206" vr="IS"><Value number="1">1</Value></DicomAttribute>
+        <DicomAttribute keyword="NumberOfStudyRelatedInstances" tag="00201208" vr="IS"><Value number="1">1</Value></DicomAttribute>
+    </NativeDicomModel>
+</param>

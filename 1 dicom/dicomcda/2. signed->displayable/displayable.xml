@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="#Transform"?>
+<!DOCTYPE dscd [
+        <!ATTLIST xsl:stylesheet id ID #REQUIRED>
+        ]>
+        
+<dscd>
+    <xsl:stylesheet 
+        id="Transform" 
+        version="1.0" 
+        xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns="http://www.w3.org/1999/xhtml"
+        >
+        <xsl:template match="/">
+             <html>
+                <head>
+                   <title><xsl:value-of select="/dscd/ClinicalDocument/title"/></title>
+                    <style type="text/css">
+                        body {
+                        color: #003366;
+                        background-color: #CCCCCC;
+                        }
+                    </style>                   
+                </head>
+                <body>
+                     <xsl:element name="img">
+                         <xsl:attribute name="src">data:image/png;base64,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</xsl:attribute>
+                         <xsl:attribute name="alt">logo salud uy</xsl:attribute>
+                     </xsl:element>
+                   <p><xsl:value-of select="/dscd/ClinicalDocument/text"/></p>
+                </body>
+            </html>
+        </xsl:template>
+    </xsl:stylesheet>
+    
+    <ClinicalDocument>
+      <title>Diagnóstico imagenológico</title>
+      <text>contenido del CDA</text>
+   </ClinicalDocument>
+   <Signed/>
+   <signatureTEXT/>
+   <legalAuthenticator/>
+   <solicitud/>
+</dscd>
+
