@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Salud.uy -->
+<xs:schema 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:ds="http://www.w3.org/2000/09/xmldsig#" 
+	xmlns:hl7="urn:hl7-org:v3" 
+	xmlns="urn:salud.uy/2014/signed-clinical-document" 
+	targetNamespace="urn:salud.uy/2014/signed-clinical-document" 
+	elementFormDefault="qualified"
+	>
+	<xs:import 
+		namespace="urn:hl7-org:v3" 
+		schemaLocation="../cda/unauthenticatedCDA.xsd"
+	/>
+	<xs:import 
+		namespace="http://www.w3.org/2000/09/xmldsig#" 
+		schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"
+	/>
+	<xs:element name="SignedClinicalDocument">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="hl7:ClinicalDocument"/>
+				<xs:element ref="ds:Signature"/>
+			</xs:sequence>
+			<!--<xs:anyAttribute namespace="##any" processContents="lax"/>-->		
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

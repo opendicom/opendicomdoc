@@ -19,7 +19,8 @@ Los niveles del documento encapsulado de opendicom (desde el más externo al má
 [https://www.w3.org/TR/1999/REC-xslt-19991116#section-Embedding-Stylesheets](https://www.w3.org/TR/1999/REC-xslt-19991116#section-Embedding-Stylesheets).
 1. **Signed Clinical Document**: capa de firma electronica que se conforma con los lineamientos de Salud.uy (firma XML DSIG con una firma envolvente) que se encuentran en 
 [https://hcen.salud.uy/documents/22124/38305/SaludUy_FirmaElectronica_0.7.pdf](https://hcen.salud.uy/documents/22124/38305/SaludUy_FirmaElectronica_0.7.pdf).
-1. **CDA**: Clinical Document de HL7 cumpliendo además con las especificación de Salud.uy que se encuentran en 
+1. **CDA**: Clinical Document de HL7 
+[http://vico.org/CDAR22005_HL7SP/infrastructure/cda/cda.htm](http://vico.org/CDAR22005_HL7SP/infrastructure/cda/cda.htm)cumpliendo además con las especificación de Salud.uy que se encuentran en 
 [https://hcen.salud.uy/web/pub/documentacion](https://hcen.salud.uy/web/pub/documentacion) (Guía CDA Mínimo, Guía OIDS, Guía Identificación de Personas, Guía Ontología de Documentos) y la especificación del CDA para informe imagenologico DICOM encontrado en 
 [http://dicom.nema.org/medical/dicom/current/output/pdf/part20.pdf](http://dicom.nema.org/medical/dicom/current/output/pdf/part20.pdf).
 1. **PDF** o **AUDIO**: Los elementos <text> del CDA pueden contener elementos <LinkHtml> caracterizados por un atributo @href. El mismo puede contener datos binarios codificados base 64 correspondientes a un mime type que el navegador sabe presentar (

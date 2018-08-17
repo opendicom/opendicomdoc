@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  elementFormDefault="qualified" 
+  
+  xmlns:dscd="http:www.opendicom.com/xds/dscd/v1" 
+  targetNamespace="http:www.opendicom.com/xds/dscd/v1" 
+  
+  xmlns:scd="urn:salud.uy/2014/signed-clinical-document" 
+  xmlns:cda="urn:hl7-org:v3"
+  
+  xmlns:req="http:www.opendicom.com/xds/request/v1"
+ 
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  >
+  <xs:element name="dscd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:sequence>
+            <xs:element ref="scd:SignedClinicalDocument"/>
+            <xs:element ref="scd:SignedClinicalDocument"/>
+          </xs:sequence>
+          <xs:element ref="scd:SignedClinicalDocument"/>
+        </xs:choice>
+        <xs:element ref="scd:SignedClinicalDocument"/>
+        
+  <xs:element name="ClinicalDocument">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:realmCode"/>
+        <xs:element ref="cda:typeId"/>
+        <xs:element ref="cda:templateId"/>
+        <xs:element ref="cda:id"/>
+        <xs:element ref="cda:code"/>
+        <xs:element ref="cda:title"/>
+        <xs:element ref="cda:effectiveTime"/>
+        <xs:element ref="cda:confidentialityCode"/>
+        <xs:element ref="cda:languageCode"/>
+        <xs:element ref="cda:recordTarget"/>
+        <xs:element ref="cda:author"/>
+        <xs:element ref="cda:custodian"/>
+        <xs:element ref="cda:informationRecipient"/>
+        <xs:element ref="cda:inFulfillmentOf"/>
+        <xs:element ref="cda:documentationOf"/>
+        <xs:element ref="cda:componentOf"/>
+        <xs:element ref="cda:component"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="realmCode">
+    <xs:complexType>
+      <xs:attribute name="code" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="typeId">
+    <xs:complexType>
+      <xs:attribute name="extension" use="required" type="xs:NCName"/>
+      <xs:attribute name="root" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="confidentialityCode">
+    <xs:complexType>
+      <xs:attribute name="code" use="required" type="xs:NCName"/>
+      <xs:attribute name="codeSystem" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="codeSystemName" use="required" type="xs:NCName"/>
+      <xs:attribute name="displayName" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="languageCode">
+    <xs:complexType>
+      <xs:attribute name="code" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="recordTarget">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:patientRole"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="patientRole">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:id"/>
+        <xs:element ref="cda:addr"/>
+        <xs:element ref="cda:patient"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="addr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:state"/>
+        <xs:element ref="cda:city"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="state">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="city">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="patient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:name"/>
+        <xs:element ref="cda:administrativeGenderCode"/>
+        <xs:element ref="cda:birthTime"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="administrativeGenderCode">
+    <xs:complexType>
+      <xs:attribute name="code" use="required" type="xs:integer"/>
+      <xs:attribute name="codeSystem" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="codeSystemName" use="required" type="xs:NCName"/>
+      <xs:attribute name="displayName" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="birthTime">
+    <xs:complexType>
+      <xs:attribute name="value" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="author">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:time"/>
+        <xs:element ref="cda:assignedAuthor"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="time">
+    <xs:complexType>
+      <xs:attribute name="value" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="assignedAuthor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:id"/>
+        <xs:element ref="cda:assignedPerson"/>
+        <xs:element ref="cda:representedOrganization"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="assignedPerson">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:name"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="representedOrganization">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:id"/>
+        <xs:element ref="cda:name"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="custodian">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:assignedCustodian"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="assignedCustodian">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:representedCustodianOrganization"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="representedCustodianOrganization">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:id"/>
+        <xs:element ref="cda:name"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="inFulfillmentOf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:order"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="order">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:id"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="documentationOf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:serviceEvent"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="serviceEvent">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:id"/>
+        <xs:element ref="cda:code"/>
+        <xs:element ref="cda:effectiveTime"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="componentOf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:encompassingEncounter"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="encompassingEncounter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:effectiveTime"/>
+        <xs:element ref="cda:encounterParticipant"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="encounterParticipant">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:assignedEntity"/>
+      </xs:sequence>
+      <xs:attribute name="typeCode" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="assignedEntity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:id"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="templateId">
+    <xs:complexType>
+      <xs:attribute name="root" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="id">
+    <xs:complexType>
+      <xs:attribute name="extension" type="xs:NMTOKEN"/>
+      <xs:attribute name="root" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="code">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="cda:translation"/>
+      </xs:sequence>
+      <xs:attribute name="code" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="codeSystem" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="codeSystemName" type="xs:NCName"/>
+      <xs:attribute name="codeSystemVersion"/>
+      <xs:attribute name="displayName" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="translation">
+    <xs:complexType>
+      <xs:attribute name="code" use="required" type="xs:NCName"/>
+      <xs:attribute name="displayName" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="title" type="xs:string"/>
+  <xs:element name="effectiveTime">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="cda:low"/>
+      </xs:sequence>
+      <xs:attribute name="value" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="low">
+    <xs:complexType>
+      <xs:attribute name="value" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="name">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="cda:family"/>
+        <xs:element ref="cda:given"/>
+      </xs:choice>
+      <xs:attribute name="code" type="xs:NMTOKEN"/>
+      <xs:attribute name="codeSystem" type="xs:NMTOKEN"/>
+      <xs:attribute name="codeSystemName" type="xs:NCName"/>
+      <xs:attribute name="codeSystemVersion" type="xs:NCName"/>
+      <xs:attribute name="displayName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="family" type="xs:NCName"/>
+  <xs:element name="given" type="xs:NCName"/>
+  <xs:element name="informationRecipient">
+    <xs:complexType>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="cda:intendedRecipient"/>
+        <xs:element ref="cda:name"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="intendedRecipient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:informationRecipient"/>
+      </xs:sequence>
+      <xs:attribute name="classCode" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="component">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="cda:structuredBody"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="cda:templateId"/>
+          <xs:element ref="cda:section"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="structuredBody">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:component"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="section">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:sequence minOccurs="0">
+          <xs:choice maxOccurs="unbounded">
+            <xs:element ref="cda:code"/>
+            <xs:element ref="cda:component"/>
+            <xs:element ref="cda:templateId"/>
+            <xs:element ref="cda:title"/>
+          </xs:choice>
+          <xs:element ref="cda:text"/>
+        </xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cda:entry"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="entry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:observation"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="observation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:code"/>
+        <xs:element ref="cda:text"/>
+        <xs:element ref="cda:value"/>
+      </xs:sequence>
+      <xs:attribute name="classCode" use="required" type="xs:NCName"/>
+      <xs:attribute name="moodCode" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="xsl.attribute">
+    <xs:sequence>
+      <xs:element ref="xsl:attribute"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="text">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="cda:paragraph"/>
+        <xs:element ref="cda:reference"/>
+        <xs:element ref="cda:table"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="paragraph">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cda:content"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="reference">
+    <xs:complexType>
+      <xs:attribute name="value" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="table">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:thead"/>
+        <xs:element ref="cda:tbody"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="thead">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:tr"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tbody">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="cda:tr"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="value">
+    <xs:complexType>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="cda:name"/>
+        <xs:element ref="cda:value"/>
+      </xs:sequence>
+      <xs:attribute name="code" type="xs:NMTOKEN"/>
+      <xs:attribute name="codeSystem" type="xs:NMTOKEN"/>
+      <xs:attribute name="codeSystemName" type="xs:NCName"/>
+      <xs:attribute name="codeSystemVersion" type="xs:NCName"/>
+      <xs:attribute name="displayName"/>
+      <xs:attribute name="value"/>
+      <xs:attribute ref="xsi:type" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:th"/>
+        <xs:element ref="cda:td"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="th">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="cda:linkHtml"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="td">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="cda:content"/>
+        <xs:element ref="cda:list"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="list">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cda:item"/>
+      </xs:sequence>
+      <xs:attribute name="ID" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="item">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cda:linkHtml"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="content">
+    <xs:complexType mixed="true">
+      <xs:attribute name="styleCode" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="linkHtml">
+    <xs:complexType mixed="true">
+      <xs:attribute name="href" use="required" type="xs:anyURI"/>
+      <xs:attribute name="id" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
