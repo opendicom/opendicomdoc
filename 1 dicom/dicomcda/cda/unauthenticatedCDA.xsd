@@ -50,28 +50,8 @@
 <!-- /RIDI -->
 
 				<!-- Identificador univoco del documento -->
-				<xs:element name="id">
-					<xs:complexType>
-						<xs:attribute name="root">
-							<xs:simpleType>
-								<xs:restriction base="xs:string">
-									<xs:pattern value="2\.16\.858\.2\.1\d{7}\.67430\.20\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31)(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23)[0-5]\d[0-5]\d\.[1-9]\d*\.[1-9]\d*">
-										<xs:annotation>
-											<xs:documentation>2.16.858=unaoid</xs:documentation>
-											<xs:documentation>2=objeto</xs:documentation>
-											<xs:documentation>1\d(7)= organización (10001442=ASSE)</xs:documentation>
-											<xs:documentation>67430=Historia Clínica Electrónica</xs:documentation>
-											<xs:documentation>aaaammddhhmmss=timestamp</xs:documentation>
-											<xs:documentation>[1-9]\d*=consecutivo interno</xs:documentation>
-											<xs:documentation>[1-9]\d*\=id HIS</xs:documentation>
-										</xs:annotation>
-									</xs:pattern>
-								</xs:restriction>
-							</xs:simpleType>
-						</xs:attribute>
-					</xs:complexType>
-				</xs:element>
-
+				<xs:element name="id" type="HCENCDAII"/>
+				
 				<!--Valores del eje 1 de la ontología de documentos, Diccionario Salud.uy-->
 				<xs:element name="code">
 					<xs:complexType>
@@ -83,10 +63,10 @@
 				</xs:element>
 
 				<!--Título sugerido: eje 2 ontología de documentos-->
-				<xs:element name="title" type="ST" minOccurs="0"/>
+				<xs:element name="title" type="xs:token" minOccurs="0"/>
 
 				<!--fecha de creación del documento-->
-				<xs:element name="effectiveTime" type="TS"/>
+				<xs:element name="effectiveTime" type="DT"/>
 				
 				<!--Nivel de confidencialidad: en principio valor N (Normal)-->
 				<xs:element name="confidentialityCode">
@@ -105,76 +85,25 @@
 				</xs:element>
 
 				<!--En caso de versionado, id del(de los) doc(s) anterior-->
-				<xs:element name="setId" minOccurs="0">
-					<xs:complexType>
-						<xs:attribute name="root">
-							<xs:simpleType>
-								<xs:restriction base="xs:string">
-									<xs:pattern value="2\.16\.858\.2\.1\d{7}\.67430\.20\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31)(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23)[0-5]\d[0-5]\d\.[1-9]\d*\.[1-9]\d*">
-										<xs:annotation>
-											<xs:documentation>2.16.858=unaoid</xs:documentation>
-											<xs:documentation>2=objeto</xs:documentation>
-											<xs:documentation>1\d(7)= organización (10001442=ASSE)</xs:documentation>
-											<xs:documentation>67430=Historia Clínica Electrónica</xs:documentation>
-											<xs:documentation>aaaammddhhmmss=timestamp</xs:documentation>
-											<xs:documentation>[1-9]\d*=consecutivo interno</xs:documentation>
-											<xs:documentation>[1-9]\d*\=id HIS</xs:documentation>
-										</xs:annotation>
-									</xs:pattern>
-								</xs:restriction>
-							</xs:simpleType>
-						</xs:attribute>
-					</xs:complexType>
-				</xs:element>
-
+				<xs:element name="setId" type="HCENCDAII" minOccurs="0"/>
+				
 				<xs:element name="versionNumber">
 					<xs:complexType>
 						<xs:attribute name="value" type="xs:positiveInteger"/>
 					</xs:complexType>
 				</xs:element>
 
-				<xs:element name="recordTarget">
+				<xs:element name="recordTarget"> 
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="patientRole">
 								<xs:complexType>
 									<xs:sequence>
-										<!--Identificador del paciente dentro del catálogo, diccionario Salud.uy-->
-										<xs:element name="id">
-											<xs:complexType>
-												<xs:attribute name="root">
-													<xs:simpleType>
-														<xs:restriction base="xs:string">
-															<xs:pattern value="2\.16\.858\.1\.[1-9]\d{0,2}\.(68909|69024)(\.[1-9]\d*)?">
-																<xs:annotation>
-																	<xs:documentation>2.16.858=unaoid</xs:documentation>
-																	<xs:documentation>1=persona</xs:documentation>
-																	<xs:documentation>[1-9]\d{0-2}= código país del documento</xs:documentation>
-																	<xs:documentation>68909=CI, 69024=otro</xs:documentation>
-																	<xs:documentation>([1-9]\d*)=nro (en caso de nro con letras, se encuentra solamente en extensión)</xs:documentation>
-																</xs:annotation>
-															</xs:pattern>
-														</xs:restriction>
-													</xs:simpleType>
-												</xs:attribute>
-												<xs:attribute name="extension" type="xs:NMTOKEN">
-													<xs:annotation>
-														<xs:documentation>Valid values include Snoopy, CMS, 1950-10-04, and 0836217462</xs:documentation>
-													</xs:annotation>
-												</xs:attribute>												
-											</xs:complexType>
-										</xs:element>
+										<xs:element name="id" type="HCENPID"/>						
 										<xs:element name="patient">
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element name="name">
-														<xs:complexType>
-															<xs:sequence>
-																<xs:element name="given" type="xs:NCName" minOccurs="1" maxOccurs="4"/>
-																<xs:element name="family" type="xs:NCName" minOccurs="0" maxOccurs="4"/>
-															</xs:sequence>
-														</xs:complexType>
-													</xs:element>
+													<xs:element name="name" type="HCENPN"/>													
 													<xs:element name="administrativeGenderCode">
 														<xs:complexType>
 															<xs:attribute name="codeSystem" fixed="2.16.858.2.10000675.69600"/>
@@ -185,7 +114,7 @@
 																	</xs:restriction>
 																</xs:simpleType>
 															</xs:attribute>
-															<xs:attribute name="displayName">
+															<xs:attribute name="code">
 																<xs:simpleType>
 																	<xs:restriction base="xs:string">
 																		<xs:pattern value="(0|1|2|9)"/>
@@ -194,17 +123,7 @@
 															</xs:attribute>
 														</xs:complexType>														
 													</xs:element>
-													<xs:element name="birthTime">
-														<xs:complexType>
-															<xs:attribute name="value">
-																<xs:simpleType>
-																	<xs:restriction base="xs:string">
-																		<xs:pattern value="(19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31)"/>
-																	</xs:restriction>
-																</xs:simpleType>
-															</xs:attribute>
-														</xs:complexType>
-													</xs:element>
+													<xs:element name="birthTime" type="DA"/>													
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
@@ -218,44 +137,12 @@
 				<xs:element name="author" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="time">
-								<xs:complexType>
-									<xs:attribute name="value">
-										<xs:simpleType>
-											<xs:restriction base="xs:string">
-												<xs:pattern value="20\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31)(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23)[0-5]\d[0-5]\d"/>
-											</xs:restriction>
-										</xs:simpleType>
-									</xs:attribute>
-								</xs:complexType>
-							</xs:element>
+							<xs:element name="time" type="DT"/>
+							
 							<xs:element name="assignedPAuthor">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="id">
-											<xs:complexType>
-												<xs:attribute name="root">
-													<xs:simpleType>
-														<xs:restriction base="xs:string">
-															<xs:pattern value="2\.16\.858\.1\.[1-9]\d{0,2}\.(68909|69024)(\.[1-9]\d*)?">
-																<xs:annotation>
-																	<xs:documentation>2.16.858=unaoid</xs:documentation>
-																	<xs:documentation>1=persona</xs:documentation>
-																	<xs:documentation>[1-9]\d{0-2}= código país del documento</xs:documentation>
-																	<xs:documentation>68909=CI, 69024=otro</xs:documentation>
-																	<xs:documentation>([1-9]\d*)=nro (en caso de nro con letras, se encuentra solamente en extensión)</xs:documentation>
-																</xs:annotation>
-															</xs:pattern>
-														</xs:restriction>
-													</xs:simpleType>
-												</xs:attribute>
-												<xs:attribute name="extension" type="xs:NMTOKEN">
-													<xs:annotation>
-														<xs:documentation>Valid values include Snoopy, CMS, 1950-10-04, and 0836217462</xs:documentation>
-													</xs:annotation>
-												</xs:attribute>												
-											</xs:complexType>
-										</xs:element>
+										<xs:element name="id" type="HCENPID"/>						
 										<xs:element name="assignedPerson">
 											<xs:complexType>
 												<xs:sequence>
@@ -1691,7 +1578,81 @@
 		<xs:attribute name="moodCode" type="x_DocumentSubstanceMood" use="required"/>
 	</xs:complexType>
 
-<!-- simple types -->
+<!-- HCEN RIDI complexTypes -->
+	<xs:complexType name="HCENCDAII">
+		<xs:attribute name="root">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="2\.16\.858\.2\.1\d{7}\.67430\.20\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31)(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23)[0-5]\d[0-5]\d\.[1-9]\d*\.[1-9]\d*">
+						<xs:annotation>
+							<xs:documentation>2.16.858=unaoid</xs:documentation>
+							<xs:documentation>2=objeto</xs:documentation>
+							<xs:documentation>1\d(7)= organización (10001442=ASSE)</xs:documentation>
+							<xs:documentation>67430=Historia Clínica Electrónica</xs:documentation>
+							<xs:documentation>aaaammddhhmmss=timestamp</xs:documentation>
+							<xs:documentation>[1-9]\d*=consecutivo interno</xs:documentation>
+							<xs:documentation>[1-9]\d*\=id HIS</xs:documentation>
+						</xs:annotation>
+					</xs:pattern>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	
+	<xs:complexType name="DT">
+		<xs:attribute name="value">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="20\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31)(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23)[0-5]\d[0-5]\d"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	
+	<xs:complexType name="DA">
+		<xs:attribute name="value">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31)"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="HCENPN">
+		<xs:sequence>
+			<xs:element name="given" type="xs:NCName" minOccurs="1" maxOccurs="4"/>
+			<xs:element name="family" type="xs:NCName" minOccurs="0" maxOccurs="4"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="HCENPID">
+		<xs:attribute name="root">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="2\.16\.858\.1\.[1-9]\d{0,2}\.(68909|69024)(\.[1-9]\d*)?">
+						<xs:annotation>
+							<xs:documentation>2.16.858=unaoid</xs:documentation>
+							<xs:documentation>1=persona</xs:documentation>
+							<xs:documentation>[1-9]\d{0-2}= código país del documento</xs:documentation>
+							<xs:documentation>68909=CI, 69024=otro</xs:documentation>
+							<xs:documentation>([1-9]\d*)=nro (en caso de nro con letras, se encuentra solamente en extensión)</xs:documentation>
+						</xs:annotation>
+					</xs:pattern>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="extension" type="xs:NMTOKEN">
+			<xs:annotation>
+				<xs:documentation>Valid values include Snoopy, CMS, 1950-10-04, and 0836217462</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>												
+	</xs:complexType>
+	
+<!-- / RIDI complexTypes -->
+	
+
+<!-- simple types CDA -->
 	
 	<xs:simpleType name="BinaryDataEncoding">
 		<xs:restriction base="xs:NMTOKEN">
