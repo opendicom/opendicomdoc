@@ -26,7 +26,7 @@
 				</xs:element>
 
 <!-- RIDI -->
-				<xs:element name="templateId">
+				<xs:element name="templateId" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:attribute name="root">
 							<xs:simpleType>
@@ -104,25 +104,7 @@
 											<xs:complexType>
 												<xs:sequence>
 													<xs:element name="name" type="HCENPN"/>													
-													<xs:element name="administrativeGenderCode">
-														<xs:complexType>
-															<xs:attribute name="codeSystem" fixed="2.16.858.2.10000675.69600"/>
-															<xs:attribute name="displayName">
-																<xs:simpleType>
-																	<xs:restriction base="xs:string">
-																		<xs:pattern value="(No\ssabe|Masculino|Feminino|No/sespecificado)"/>
-																	</xs:restriction>
-																</xs:simpleType>
-															</xs:attribute>
-															<xs:attribute name="code">
-																<xs:simpleType>
-																	<xs:restriction base="xs:string">
-																		<xs:pattern value="(0|1|2|9)"/>
-																	</xs:restriction>
-																</xs:simpleType>
-															</xs:attribute>
-														</xs:complexType>														
-													</xs:element>
+													<xs:element name="administrativeGenderCode" type="HCENSEXO"/>
 													<xs:element name="birthTime" type="DA"/>													
 												</xs:sequence>
 											</xs:complexType>
@@ -143,44 +125,9 @@
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="id" type="HCENPID"/>						
-										<xs:element name="assignedPerson">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="name">
-														<xs:complexType>
-															<xs:sequence>
-																<xs:element name="given" type="xs:NCName" minOccurs="1" maxOccurs="4"/>
-																<xs:element name="family" type="xs:NCName" minOccurs="0" maxOccurs="4"/>
-															</xs:sequence>
-														</xs:complexType>
-													</xs:element>
-												</xs:sequence>
-											</xs:complexType>
+										<xs:element name="assignedPerson" type="HCENPNAME">
 										</xs:element>
-										<xs:element name="representedOrganization">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="id">
-														<xs:complexType>
-															<xs:attribute name="root">
-																<xs:simpleType>
-																	<xs:restriction base="xs:string">
-																		<xs:pattern value="2\.16\.858\.0(\.[1-9]\d*|\.0)*">
-																			<xs:annotation>
-																				<xs:documentation>2.16.858=unaoid</xs:documentation>
-																				<xs:documentation>0=institution</xs:documentation>
-																			</xs:annotation>
-																		</xs:pattern>
-																		<xs:maxLength value="64"/>
-																	</xs:restriction>
-																</xs:simpleType>
-															</xs:attribute>
-														</xs:complexType>														
-													</xs:element>
-													<xs:element name="name" type="xs:token"/>
-												</xs:sequence>
-											</xs:complexType>
-										</xs:element>
+										<xs:element name="representedOrganization" type="HCENORG"/>									
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
@@ -194,30 +141,7 @@
 							<xs:element name="assignedCustodian">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="representedCustodianOrganization">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="id">
-														<xs:complexType>
-															<xs:attribute name="root">
-																<xs:simpleType>
-																	<xs:restriction base="xs:string">
-																		<xs:pattern value="2\.16\.858\.0(\.[1-9]\d*|\.0)*">
-																			<xs:annotation>
-																				<xs:documentation>2.16.858=unaoid</xs:documentation>
-																				<xs:documentation>0=institution</xs:documentation>
-																			</xs:annotation>
-																		</xs:pattern>
-																		<xs:maxLength value="64"/>
-																	</xs:restriction>
-																</xs:simpleType>
-															</xs:attribute>
-														</xs:complexType>
-													</xs:element>
-													<xs:element name="name" type="xs:token"/>
-												</xs:sequence>
-											</xs:complexType>
-										</xs:element>
+										<xs:element name="representedCustodianOrganization" type="HCENORG"/>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
@@ -1647,6 +1571,67 @@
 				<xs:documentation>Valid values include Snoopy, CMS, 1950-10-04, and 0836217462</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>												
+	</xs:complexType>
+	
+	<xs:complexType name="HCENSEXO">
+		<xs:attribute name="codeSystem" fixed="2.16.858.2.10000675.69600"/>
+		<xs:attribute name="displayName">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(No\ssabe|Masculino|Feminino|No/sespecificado)"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="code">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(0|1|2|9)"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>														
+	
+	<xs:complexType name="HCENPNAME">
+		<xs:sequence>
+			<xs:element name="name">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="given" type="xs:NCName" minOccurs="1" maxOccurs="4"/>
+						<xs:element name="family" type="xs:NCName" minOccurs="0" maxOccurs="4"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="HCENORG">
+		<xs:sequence>
+			<xs:element name="id">
+				<xs:complexType>
+					<xs:attribute name="root">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:pattern value="2\.16\.858\.0(\.[1-9]\d*|\.0)*">
+									<xs:annotation>
+										<xs:documentation>2.16.858=unaoid</xs:documentation>
+										<xs:documentation>0=institution</xs:documentation>
+									</xs:annotation>
+								</xs:pattern>
+								<xs:maxLength value="64"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>														
+			</xs:element>
+			<xs:element name="name">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="64"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element> 
+		</xs:sequence>
 	</xs:complexType>
 	
 <!-- / RIDI complexTypes -->
