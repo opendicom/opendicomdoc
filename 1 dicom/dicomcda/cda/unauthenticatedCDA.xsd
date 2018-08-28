@@ -17,6 +17,7 @@
 	<xs:element name="ClinicalDocument">
 		<xs:complexType>
 			<xs:sequence>
+				
 				<xs:element name="typeId">
 					<xs:complexType>
 						<xs:attribute name="root" fixed="2.16.840.1.113883.1.3"/>
@@ -269,6 +270,30 @@
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
+										<xs:element name="representedOrganization">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="id">
+														<xs:complexType>
+															<xs:attribute name="root">
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:pattern value="2\.16\.858\.0(\.[1-9]\d*|\.0)*">
+																			<xs:annotation>
+																				<xs:documentation>2.16.858=unaoid</xs:documentation>
+																				<xs:documentation>0=institution</xs:documentation>
+																			</xs:annotation>
+																		</xs:pattern>
+																		<xs:maxLength value="64"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+														</xs:complexType>														
+													</xs:element>
+													<xs:element name="name" type="xs:token"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
@@ -326,8 +351,14 @@
 												<xs:sequence>
 													<xs:element name="name">
 														<xs:simpleType>
+															<xs:annotation>
+																<xs:documentation>nombre corto de institución</xs:documentation>
+																<xs:documentation>^nombre del servicio tal registrado o modalidad DICOM</xs:documentation>
+																<xs:documentation>^nombre de ususario del profesional</xs:documentation>
+																<xs:documentation>^especialidad</xs:documentation>
+															</xs:annotation>
 															<xs:restriction base="xs:string">
-																
+																<xs:pattern value="(\c*|-|)(^(\c*|-|)){0,3}"/>
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
@@ -342,7 +373,28 @@
 					</xs:complexType>
 				</xs:element>
 
-				<xs:element name="inFulfillmentOf" type="POCD_MT000040.InFulfillmentOf" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="inFulfillmentOf" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="order">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="id">
+											<xs:annotation>
+												<xs:documentation>@root: OID issuer of accession number</xs:documentation>
+												<xs:documentation>@extension: accession number (16 char max)</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="root"></xs:attribute>
+												<xs:attribute name="extension"></xs:attribute>												
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
 
 				<xs:element name="documentationOf" type="POCD_MT000040.DocumentationOf" minOccurs="0" maxOccurs="unbounded"/>
 
