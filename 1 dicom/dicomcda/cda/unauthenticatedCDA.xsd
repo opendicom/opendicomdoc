@@ -66,7 +66,7 @@
 				<xs:element name="title" type="xs:token" minOccurs="0"/>
 
 				<!--fecha de creación del documento-->
-				<xs:element name="effectiveTime" type="DT"/>
+				<xs:element name="effectiveTime" type="HCENDT"/>
 				
 				<!--Nivel de confidencialidad: en principio valor N (Normal)-->
 				<xs:element name="confidentialityCode">
@@ -84,8 +84,11 @@
 					</xs:complexType>
 				</xs:element>
 
-				<!--En caso de versionado, id del(de los) doc(s) anterior-->
-				<xs:element name="setId" type="HCENCDAII" minOccurs="0"/>
+				<xs:element name="setId" type="HCENCDAII" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>En caso de versionado, id del doc anterior</xs:documentation>
+					</xs:annotation>					
+				</xs:element>
 				
 				<xs:element name="versionNumber">
 					<xs:complexType>
@@ -136,6 +139,9 @@
 				</xs:element>
 
 				<xs:element name="custodian">
+					<xs:annotation>
+						<xs:documentation>afiliación del paciente</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="assignedCustodian">
@@ -149,9 +155,11 @@
 					</xs:complexType>
 				</xs:element>
 
-<!-- RIDI -->
-				<!-- DICOM requesting -->
+<!-- RIDI DICOM-->
 				<xs:element name="informationRecipient" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>DICOM requesting</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="intendedRecipient">
@@ -177,7 +185,7 @@
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
-									<xs:attribute name="classCode" fixed="true"/>
+									<xs:attribute name="classCode" fixed="ASSIGNED"/>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
@@ -185,6 +193,9 @@
 				</xs:element>
 
 				<xs:element name="inFulfillmentOf" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>DICOM accession number</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="order">
@@ -196,8 +207,8 @@
 												<xs:documentation>@extension: accession number (16 char max)</xs:documentation>
 											</xs:annotation>
 											<xs:complexType>
-												<xs:attribute name="root"></xs:attribute>
-												<xs:attribute name="extension"></xs:attribute>												
+												<xs:attribute name="root" type="HCENORG"></xs:attribute>
+												<xs:attribute name="extension" type="DICOMSH"/>												
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
@@ -207,13 +218,25 @@
 					</xs:complexType>
 				</xs:element>
 
-				<xs:element name="documentationOf" type="POCD_MT000040.DocumentationOf" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="documentationOf" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>solicitud</xs:documentation>
+					</xs:annotation>
+					
+				</xs:element>
 
-				<xs:element name="relatedDocument" type="POCD_MT000040.RelatedDocument" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="relatedDocument" minOccurs="0" maxOccurs="unbounded">
+					
+				</xs:element>
 
-<!-- /RIDI -->
+<!-- /RIDI DICOM-->
 				
-				<xs:element name="componentOf" type="POCD_MT000040.Component1" minOccurs="0"/>
+				<xs:element name="componentOf" type="POCD_MT000040.Component1" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>realizador - performing</xs:documentation>
+					</xs:annotation>
+					
+				</xs:element>
 
 				<xs:element name="component">
 					<xs:complexType>
@@ -1502,7 +1525,7 @@
 		<xs:attribute name="moodCode" type="x_DocumentSubstanceMood" use="required"/>
 	</xs:complexType>
 
-<!-- HCEN RIDI complexTypes -->
+	<!-- RIDI HCEN complexTypes -->
 	<xs:complexType name="HCENCDAII">
 		<xs:attribute name="root">
 			<xs:simpleType>
@@ -1523,31 +1546,12 @@
 		</xs:attribute>
 	</xs:complexType>
 	
-	<xs:complexType name="DT">
-		<xs:attribute name="value">
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:pattern value="20\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31)(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23)[0-5]\d[0-5]\d"/>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
+	<xs:complexType name="HCENDT">
+		<xs:attribute name="value" type="DICOMDT"/>		
 	</xs:complexType>
 	
-	<xs:complexType name="DA">
-		<xs:attribute name="value">
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:pattern value="(19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31)"/>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
-	</xs:complexType>
-
-	<xs:complexType name="HCENPN">
-		<xs:sequence>
-			<xs:element name="given" type="xs:NCName" minOccurs="1" maxOccurs="4"/>
-			<xs:element name="family" type="xs:NCName" minOccurs="0" maxOccurs="4"/>
-		</xs:sequence>
+	<xs:complexType name="HCENDA">
+		<xs:attribute name="value" type="DICOMDA"/>		
 	</xs:complexType>
 
 	<xs:complexType name="HCENPID">
@@ -1566,7 +1570,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
-		<xs:attribute name="extension" type="xs:NMTOKEN">
+		<xs:attribute name="extension" type="DICOMSH">
 			<xs:annotation>
 				<xs:documentation>Valid values include Snoopy, CMS, 1950-10-04, and 0836217462</xs:documentation>
 			</xs:annotation>
@@ -1595,10 +1599,10 @@
 		<xs:sequence>
 			<xs:element name="name">
 				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="given" type="xs:NCName" minOccurs="1" maxOccurs="4"/>
-						<xs:element name="family" type="xs:NCName" minOccurs="0" maxOccurs="4"/>
-					</xs:sequence>
+					<xs:choice maxOccurs="6">
+						<xs:element name="given" type="DICOMNAME" minOccurs="0" maxOccurs="4"/>
+						<xs:element name="family" type="DICOMNAME" minOccurs="1" maxOccurs="2"/>
+					</xs:choice>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
@@ -1623,18 +1627,48 @@
 					</xs:attribute>
 				</xs:complexType>														
 			</xs:element>
-			<xs:element name="name">
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:minLength value="1"/>
-						<xs:maxLength value="64"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element> 
+			<xs:element name="name" type="DICOMLO" minOccurs="0"/>		 
 		</xs:sequence>
 	</xs:complexType>
 	
-<!-- / RIDI complexTypes -->
+<!-- / RIDI HCEN complexTypes -->
+
+<!-- RIDI DICOM simple types -->
+
+	<xs:simpleType name="DICOMDT">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="20\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31)(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23)[0-5]\d[0-5]\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="DICOMDA">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(19|20)\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="DICOMSH">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="DICOMLO">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="DICOMNAME">
+		<xs:restriction base="xs:NCName">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+<!-- /RIDI DICOM simple types -->
 	
 
 <!-- simple types CDA -->
