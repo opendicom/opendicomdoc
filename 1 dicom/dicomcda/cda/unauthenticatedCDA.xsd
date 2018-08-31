@@ -243,10 +243,71 @@
 
 <!-- /OPENDICOM-->
 				
-				<xs:element name="componentOf" type="POCD_MT000040.Component1" minOccurs="0">
+				<xs:element name="componentOf" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>realizador - performing</xs:documentation>
 					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="encompassingEncounter">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="code">
+											<xs:annotation>
+												<xs:documentation>ontologia HCEN - segundo eje</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="displayName" type="DICOMLO"/>
+												<xs:attribute name="codeSystemName" fixed="SNOMED CT"/>
+												<xs:attribute name="codeSystem" fixed="2.16.840.1.113883.6.96"/>
+												<xs:attribute name="code" type="DICOMSH"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="effectiveTime">
+											<xs:annotation>
+												<xs:documentation>principio y fin del evento</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="low" type="HCENDT"/>
+													<xs:element name="high" type="HCENDT"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="encounterParticipant"></xs:element>
+										<xs:element name="location">
+											<xs:annotation>
+												<xs:documentation>servicio</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="healthCareFacility">
+														<xs:annotation>
+															<xs:documentation>ontologia HCEN - tercer eje</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="code">
+																	<xs:complexType>
+																		<xs:attribute name="displayName" type="DICOMLO"/>
+																		<xs:attribute name="codeSystemName" fixed="SNOMED CT"/>
+																		<xs:attribute name="codeSystem" fixed="2.16.840.1.113883.6.96"/>
+																		<xs:attribute name="code" type="DICOMSH"/>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="classCode" fixed="SDLOC"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="typeCode" fixed="LOC"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
 					
 				</xs:element>
 
