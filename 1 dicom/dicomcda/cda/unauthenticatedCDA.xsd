@@ -25,7 +25,7 @@
 					</xs:complexType>
 				</xs:element>
 
-<!-- RIDI -->
+<!-- OPENDICOM -->
 				<xs:element name="templateId" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:attribute name="root">
@@ -47,13 +47,14 @@
 						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
-<!-- /RIDI -->
+<!-- /OPENDICOM -->
 
-				<!-- Identificador univoco del documento -->
 				<xs:element name="id" type="HCENCDAII"/>
 				
-				<!--Valores del eje 1 de la ontología de documentos, Diccionario Salud.uy-->
 				<xs:element name="code">
+					<xs:annotation>
+						<xs:documentation>Valores del eje 1 de la ontología de documentos, Diccionario Salud.uy</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:attribute name="displayName" fixed="Diagnóstico imagenológico"/>
 						<xs:attribute name="codeSystemName" fixed="LOINC"/>
@@ -62,13 +63,18 @@
 					</xs:complexType>
 				</xs:element>
 
-				<!--Título sugerido: eje 2 ontología de documentos-->
-				<xs:element name="title" type="xs:token" minOccurs="0"/>
+				<xs:element name="title" type="xs:token" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Título sugerido: eje 2 ontología de documentos</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 
-				<!--fecha de creación del documento-->
-				<xs:element name="effectiveTime" type="HCENDT"/>
+				<xs:element name="effectiveTime" type="HCENDT">
+					<xs:annotation>
+						<xs:documentation>fecha de creación del documento</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 				
-				<!--Nivel de confidencialidad: en principio valor N (Normal)-->
 				<xs:element name="confidentialityCode">
 					<xs:complexType>
 						<!-- <xs:attribute name="displayName" fixed="normal"/> -->
@@ -106,9 +112,9 @@
 										<xs:element name="patient">
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element name="name" type="HCENPN"/>													
+													<xs:element name="name" type="HCENPNAME"/>													
 													<xs:element name="administrativeGenderCode" type="HCENSEXO"/>
-													<xs:element name="birthTime" type="DA"/>													
+													<xs:element name="birthTime" type="DICOMDA"/>													
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
@@ -122,7 +128,7 @@
 				<xs:element name="author" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="time" type="DT"/>
+							<xs:element name="time" type="DICOMDT"/>
 							
 							<xs:element name="assignedPAuthor">
 								<xs:complexType>
@@ -155,7 +161,7 @@
 					</xs:complexType>
 				</xs:element>
 
-<!-- RIDI DICOM-->
+<!-- OPENDICOM-->
 				<xs:element name="informationRecipient" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
 						<xs:documentation>DICOM requesting</xs:documentation>
@@ -198,17 +204,30 @@
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="order">
+							<xs:element name="order" type="HCENORG"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="documentationOf" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>solicitud</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="serviceEvent">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="id">
+										<xs:element name="id" type="HCENCDAII"/>
+										<xs:element name="code" type="DICOMREQCODE"></xs:element>
+										<xs:element name="effectiveTime">
 											<xs:annotation>
-												<xs:documentation>@root: OID issuer of accession number</xs:documentation>
-												<xs:documentation>@extension: accession number (16 char max)</xs:documentation>
+												<xs:documentation>fecha hora solicitada</xs:documentation>
 											</xs:annotation>
 											<xs:complexType>
-												<xs:attribute name="root" type="HCENORG"></xs:attribute>
-												<xs:attribute name="extension" type="DICOMSH"/>												
+												<xs:sequence>
+													<xs:element name="low" type="HCENDT"/>
+												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
@@ -218,18 +237,11 @@
 					</xs:complexType>
 				</xs:element>
 
-				<xs:element name="documentationOf" minOccurs="0" maxOccurs="unbounded">
-					<xs:annotation>
-						<xs:documentation>solicitud</xs:documentation>
-					</xs:annotation>
-					
-				</xs:element>
-
 				<xs:element name="relatedDocument" minOccurs="0" maxOccurs="unbounded">
 					
 				</xs:element>
 
-<!-- /RIDI DICOM-->
+<!-- /OPENDICOM-->
 				
 				<xs:element name="componentOf" type="POCD_MT000040.Component1" minOccurs="0">
 					<xs:annotation>
@@ -1631,10 +1643,41 @@
 		</xs:sequence>
 	</xs:complexType>
 	
-<!-- / RIDI HCEN complexTypes -->
+<!-- / RIDI HCEN complex types -->
 
-<!-- RIDI DICOM simple types -->
-
+<!-- OPENDICOM complex types -->
+	
+	<xs:complexType name="DICOMREQCODE">
+		<xs:sequence>
+			<xs:element name="translation">
+				<xs:complexType>
+					<xs:attribute name="code" type="DICOMMODALITY"/>
+					<xs:attribute name="displayName" type="DICOMMODALITYNAME"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="code" type="DICOMSH"/>
+		<xs:attribute name="codeSystem" type="DICOMUI"/>
+		<xs:attribute name="codeSystemName" type="DICOMSH"/>
+		<xs:attribute name="displayName" type="DICOMLO"/>
+	</xs:complexType>
+	
+<!-- /OPENDICOM complex types -->
+	
+<!-- OPENDICOM simple types -->
+	
+	<xs:simpleType name="DICOMMODALITY">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(CR|DR|CT|MR|XA|PT|PET|OT|SR|SC|DOC)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="DICOMMODALITYNAME">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(RADIOLOGIA\sCOMPUTADA|RADIOLOGIA\sDIGITAL|TOMOGRAFIA\sCOMPUTADA|RESONANCIA\sMAGNETICA|ANGIOGRAFIA|PET|PET|OTRO|INFORME\sESTRUCTURADO|CAPTURA\sSEGUNDARIA|DOCUMENTO)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
 	<xs:simpleType name="DICOMDT">
 		<xs:restriction base="xs:string">
 			<xs:pattern value="20\d\d(0[1-9]|10|11|12)(0[1-9]|1\d|2\d|30|31)(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23)[0-5]\d[0-5]\d"/>
@@ -1654,9 +1697,15 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
+	<xs:simpleType name="DICOMUI">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="(0|[1-9]/d*)(\.(0|[1-9]/d*))*"></xs:pattern>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
 	<xs:simpleType name="DICOMLO">
 		<xs:restriction base="xs:token">
-			<xs:minLength value="1"/>
 			<xs:maxLength value="64"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -1668,7 +1717,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-<!-- /RIDI DICOM simple types -->
+<!-- /OPENDICOM simple types -->
 	
 
 <!-- simple types CDA -->
