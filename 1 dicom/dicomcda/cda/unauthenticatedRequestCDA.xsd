@@ -30,14 +30,14 @@
 						<xs:attribute name="root">
 							<xs:simpleType>
 								<xs:restriction base="DICOMUI">
-									<xs:pattern value="2\.16\.858\.2\.10000675\.72591\.10014247\.[1-9]\d*\.\d">
+									<xs:pattern value="2\.16\.858\.2\.10000675\.72591\.10014247\.0\.\d">
 										<xs:annotation>
 											<xs:documentation>2.16.858=unaoid</xs:documentation>
 											<xs:documentation>2=objeto</xs:documentation>
 											<xs:documentation>10000675=SNIS</xs:documentation>
 											<xs:documentation>72591=ModeloDePlantillaDigital</xs:documentation>
 											<xs:documentation>10014247=Jesros</xs:documentation>
-											<xs:documentation>[1-9]\d*=número</xs:documentation>
+											<xs:documentation>0=request</xs:documentation>
 											<xs:documentation>\d=versión</xs:documentation>
 										</xs:annotation>
 									</xs:pattern>
@@ -145,7 +145,7 @@
 
 				<xs:element name="custodian">
 					<xs:annotation>
-						<xs:documentation>afiliación del paciente</xs:documentation>
+						<xs:documentation>Nombre del prestador custodia del documento</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
@@ -199,7 +199,7 @@
 
 				<xs:element name="inFulfillmentOf" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
-						<xs:documentation>DICOM accession number</xs:documentation>
+						<xs:documentation>Solicitud y DICOM accession number</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
@@ -464,7 +464,8 @@
 					</xs:attribute>
 				</xs:complexType>														
 			</xs:element>
-			<xs:element name="name" type="DICOMLO" minOccurs="0"/>		 
+			<xs:element name="name" type="DICOMLO" minOccurs="0"/>
+			<xs:element name="telecom" type="xs:anyURI"/>
 		</xs:sequence>
 	</xs:complexType>
 	

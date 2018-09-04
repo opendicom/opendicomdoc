@@ -65,6 +65,15 @@
 				<xs:element name="title" type="xs:token" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Título sugerido: eje 2 ontología de documentos</xs:documentation>
+						
+						<xs:documentation>informe de densitometría ósea</xs:documentation>
+						<xs:documentation>informe de ecografía</xs:documentation>
+						<xs:documentation>informe de imagenología</xs:documentation>
+						<xs:documentation>informe de mamografía</xs:documentation>
+						<xs:documentation>informe de medicina nuclear</xs:documentation>
+						<xs:documentation>informe de resonancia magnética nuclear</xs:documentation>
+						<xs:documentation>informe de tomografía computarizada</xs:documentation>
+						<xs:documentation>informe radiológico</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 
@@ -199,11 +208,15 @@
 
 				<xs:element name="inFulfillmentOf" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
-						<xs:documentation>DICOM accession number</xs:documentation>
+						<xs:documentation>Solicitud y DICOM accession number</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="order" type="HCENORG"/>
+							<xs:element name="order">
+								<xs:complexType>
+									<xs:attribute name="root"></xs:attribute>
+								</xs:complexType>
+							</xs:element>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -235,10 +248,7 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-
-				<xs:element name="relatedDocument" minOccurs="0" maxOccurs="unbounded">
 					
-				</xs:element>
 
 <!-- /OPENDICOM-->
 				
@@ -285,6 +295,8 @@
 																		<xs:attribute name="root" type="DICOMUI"/>
 																	</xs:complexType>
 																</xs:element>
+																<xs:element name="telecom" type="xs:anyURI"/>
+																<xs:element name="representedOrganization"/>
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
@@ -465,6 +477,7 @@
 				</xs:complexType>														
 			</xs:element>
 			<xs:element name="name" type="DICOMLO" minOccurs="0"/>		 
+			<xs:element name="telecom" type="xs:anyURI"/>
 		</xs:sequence>
 	</xs:complexType>
 	
