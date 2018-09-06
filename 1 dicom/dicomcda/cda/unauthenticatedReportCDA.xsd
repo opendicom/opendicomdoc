@@ -6,7 +6,8 @@
 	elementFormDefault="qualified"
 	>
 	<xs:annotation>
-		<xs:documentation>saluduy hcen cdamin 2.1 (diciembre 2017)</xs:documentation>
+		<xs:documentation>Base: saluduy hcen cdamin 2.1 (diciembre 2017)</xs:documentation>
+		<xs:documentation>Adiciones empiezan con comentario OPENDICOM y terminan con comentario /OPENDICOM</xs:documentation>
 	</xs:annotation>
 	<!-- 
 	<xs:include schemaLocation="cda_r2_normativewebedition2010/processable/coreschemas/voc.xsd"/>
@@ -24,7 +25,7 @@
 					</xs:complexType>
 				</xs:element>
 
-<!-- OPENDICOM RIDI -->
+<!-- OPENDICOM -->
 				<xs:element name="templateId">
 					<xs:complexType>
 						<xs:attribute name="root">
@@ -46,7 +47,7 @@
 						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
-<!-- /OPENDICOM RIDI -->
+<!-- /OPENDICOM -->
 
 				<xs:element name="id" type="HCENCDAII"/>
 				
@@ -154,7 +155,7 @@
 
 				<xs:element name="custodian">
 					<xs:annotation>
-						<xs:documentation>afiliación del paciente</xs:documentation>
+						<xs:documentation>XDS Document Source (OID, name, URI)</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
@@ -170,67 +171,110 @@
 				</xs:element>
 
 <!-- OPENDICOM-->
-				<xs:element name="informationRecipient" minOccurs="0" maxOccurs="unbounded">
+				<!-- DICOM requesting -->				
+				<xs:element name="informationRecipient">
 					<xs:annotation>
-						<xs:documentation>DICOM requesting</xs:documentation>
+						<xs:documentation>DICOM requesting physician</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="intendedRecipient">
 								<xs:complexType>
 									<xs:sequence>
+										<xs:element name="id" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>identificador del médico solicitante</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="telecom" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>forma(s) de comunicarse con el médico solicitante</xs:documentation>
+											</xs:annotation>
+										</xs:element>
 										<xs:element name="informationRecipient">
+											<xs:annotation>
+												<xs:documentation>apellido, nombre, especialidad, prefijo y sufijo del médico solicitante</xs:documentation>
+											</xs:annotation>							
 											<xs:complexType>
 												<xs:sequence>
 													<xs:element name="name">
 														<xs:simpleType>
 															<xs:annotation>
-																<xs:documentation>nombre corto de institución</xs:documentation>
-																<xs:documentation>^nombre del servicio tal registrado o modalidad DICOM</xs:documentation>
-																<xs:documentation>^nombre de ususario del profesional</xs:documentation>
+																<xs:documentation>apellidos</xs:documentation>
+																<xs:documentation>^nombres</xs:documentation>
 																<xs:documentation>^especialidad</xs:documentation>
+																<xs:documentation>^prefijo</xs:documentation>
+																<xs:documentation>^sufijo</xs:documentation>
 															</xs:annotation>
 															<xs:restriction base="xs:string">
-																<xs:pattern value="(\c*|-|)(^(\c*|-|)){0,3}"/>
+																<xs:pattern value="([\c*(>\c*)?]|-|)(^(\c*|-|)){0,4}"/>
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
+										<xs:element name="receivedOrganization" type="HCENORG">
+											<xs:annotation>
+												<xs:documentation>organización representada por el médico solicitante</xs:documentation>
+											</xs:annotation>
+										</xs:element>
 									</xs:sequence>
-									<xs:attribute name="classCode" fixed="ASSIGNED"/>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
 
+				<!-- DICOM patient insurance plan -->				
+				<xs:element name="informationRecipient" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Patient insurance plan(s) or</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="intendedRecipient">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="receivedOrganization" type="HCENORG"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<!-- DICOM acessionNumber -->				
 				<xs:element name="inFulfillmentOf" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
-						<xs:documentation>Solicitud y DICOM accession number</xs:documentation>
+						<xs:documentation>DICOM accession number related to custodian</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="order">
 								<xs:complexType>
-									<xs:attribute name="root"></xs:attribute>
+									<xs:attribute name="extension"></xs:attribute>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
 
+				<!-- DICOM request -->				
 				<xs:element name="documentationOf" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
-						<xs:documentation>solicitud</xs:documentation>
+						<xs:documentation>solicitud relacionada al </xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="serviceEvent">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="id" type="HCENCDAII"/>
+										<xs:element name="id" type="DICOMUI">
+											<xs:annotation>
+												<xs:documentation>StudyInstanceUID de la solicitud</xs:documentation>
+											</xs:annotation>
+										</xs:element>
 										<xs:element name="code" type="DICOMREQCODE"></xs:element>
 										<xs:element name="effectiveTime">
 											<xs:annotation>
@@ -242,14 +286,36 @@
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
+										<xs:element name="Performer">
+											<xs:annotation>
+												<xs:documentation>Identificación del servicio responsable de realizar la solicitud</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="assignedEntity">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="id">
+																	<xs:complexType>
+																		<xs:attribute name="extension" type="DICOMORGSERV"/>
+																		<xs:attribute name="root" type="DICOMUI"/>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="telecom" type="xs:anyURI"/>
+																<xs:element name="representedOrganization"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="typeCode" fixed="ATND"/>
+											</xs:complexType>
+										</xs:element>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-					
-
 <!-- /OPENDICOM-->
 				
 				<xs:element name="componentOf" minOccurs="0">
@@ -283,6 +349,8 @@
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
+<!-- OPENDICOM-->										
+										<!-- DICOM performing -->				
 										<xs:element name="encounterParticipant">
 											<xs:complexType>
 												<xs:sequence>
@@ -304,6 +372,7 @@
 												<xs:attribute name="typeCode" fixed="ATND"/>
 											</xs:complexType>
 										</xs:element>
+<!-- /OPENDICOM-->
 										<xs:element name="location">
 											<xs:annotation>
 												<xs:documentation>servicio</xs:documentation>
@@ -341,20 +410,147 @@
 
 				<xs:element name="component">
 					<xs:complexType>
-						<xs:choice>
+						<xs:sequence>
 							<xs:element name="structuredBody">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="component" maxOccurs="unbounded">
+										<!-- clinical information -->
+										<xs:element name="component" minOccurs="0">
 											<xs:complexType>
 												<xs:sequence>
 													<xs:element name="section">
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="code" type="CE" minOccurs="0"/>
-																<xs:element name="title" type="ST" minOccurs="0"/>
+																<xs:element name="code">
+																	<xs:complexType>
+																		<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+																		<xs:attribute name="codeSystemName" fixed="LOINC"/>
+																		<xs:attribute name="code" fixed="55752-0"/>
+																		<xs:attribute name="displayName" fixed="Dato clínico"/>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="title" fixed="Dato clínico"/>
 																<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
-																<xs:element name="entry" type="POCD_MT000040.Entry" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>													
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<!-- imaging procedure description -->
+										<xs:element name="component">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="section">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="code">
+																	<xs:complexType>
+																		<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+																		<xs:attribute name="codeSystemName" fixed="LOINC"/>
+																		<xs:attribute name="code" fixed="55111-9"/>
+																		<xs:attribute name="displayName" fixed="Procedimiento imagenológico"/>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="title" fixed="Procedimiento imagenológico"/>
+																<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
+																<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>													
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<!-- comparison study -->
+										<xs:element name="component" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="section">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="code">
+																	<xs:complexType>
+																		<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+																		<xs:attribute name="codeSystemName" fixed="LOINC"/>
+																		<xs:attribute name="code" fixed="18834-2"/>
+																		<xs:attribute name="displayName" fixed="Estudio predecedente"/>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="title" fixed="Estudio predecedente"/>
+																<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
+																<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>													
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<!-- findings -->
+										<xs:element name="component" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="section">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="code">
+																	<xs:complexType>
+																		<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+																		<xs:attribute name="codeSystemName" fixed="LOINC"/>
+																		<xs:attribute name="code" fixed="59776-5"/>
+																		<xs:attribute name="displayName" fixed="Hallazgos"/>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="title" fixed="Hallazgos"/>
+																<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
+																<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>													
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<!-- impressiones -->
+										<xs:element name="component" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="section">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="code">
+																	<xs:complexType>
+																		<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+																		<xs:attribute name="codeSystemName" fixed="LOINC"/>
+																		<xs:attribute name="code" fixed="19005-8"/>
+																		<xs:attribute name="displayName" fixed="Impresiones"/>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="title" fixed="Impresiones"/>
+																<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
+																<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>													
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<!-- adendum -->
+										<xs:element name="component" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="section">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="code">
+																	<xs:complexType>
+																		<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+																		<xs:attribute name="codeSystemName" fixed="LOINC"/>
+																		<xs:attribute name="code" fixed="8653-8"/>
+																		<xs:attribute name="displayName" fixed="Aviso legal"/>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="title" fixed="Aviso legal"/>
+																<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>													
@@ -364,10 +560,7 @@
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
-							<xs:element name="nonXMLBody">
-								
-							</xs:element>
-						</xs:choice>
+						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
@@ -375,6 +568,7 @@
 	</xs:element>
 
 	<!-- RIDI HCEN complexTypes -->
+	
 	<xs:complexType name="HCENCDAII">
 		<xs:attribute name="root">
 			<xs:simpleType>
@@ -476,7 +670,7 @@
 					</xs:attribute>
 				</xs:complexType>														
 			</xs:element>
-			<xs:element name="name" type="DICOMLO" minOccurs="0"/>		 
+			<xs:element name="name" type="DICOMLO"/>		 
 			<xs:element name="telecom" type="xs:anyURI"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -543,6 +737,9 @@
 	</xs:simpleType>
 	
 	<xs:simpleType name="DICOMORGSERV">
+		<xs:annotation>
+			<xs:documentation>institucion^service^especialista (- o -^- finales autorizados cuando no son especificos)</xs:documentation>
+		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:pattern value=".+(^.*)"></xs:pattern>
 			<xs:maxLength value="64"/>
@@ -563,6 +760,37 @@
 	</xs:simpleType>
 	
 <!-- /OPENDICOM simple types -->
+	
+	
+	
+<!-- POCD_MT000040.Entry -->
+	<xs:complexType name="entry">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="act" type="act"/>
+				<xs:element name="encounter" type="POCD_MT000040.Encounter"/>
+				<xs:element name="observation" type="POCD_MT000040.Observation"/>
+				<xs:element name="observationMedia" type="POCD_MT000040.ObservationMedia"/>
+				<xs:element name="organizer" type="POCD_MT000040.Organizer"/>
+				<xs:element name="procedure" type="POCD_MT000040.Procedure"/>
+				<xs:element name="regionOfInterest" type="POCD_MT000040.RegionOfInterest"/>
+				<xs:element name="substanceAdministration" type="POCD_MT000040.SubstanceAdministration"/>
+				<xs:element name="supply" type="POCD_MT000040.Supply"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="act">
+		<xs:sequence>
+			<xs:element name="templateId" type="II" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="id" type="II" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="code" type="CD"/>
+			<xs:element name="effectiveTime" type="IVL_TS" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="classCode" type="x_ActClassDocumentEntryAct" use="required"/>
+		<xs:attribute name="moodCode" type="x_DocumentActMood" use="required"/>
+	</xs:complexType>
+	
 	
 
 <!-- simple types CDA -->
@@ -767,15 +995,6 @@
 				sorting, querying, indexing, etc.) Used for names,
 				symbols, and formal expressions.
 			</xs:documentation>
-			<xs:appinfo>
-				<sch:pattern name="validate ST">
-					<sch:rule abstract="true" id="rule-ST">
-						<sch:report test="(@nullFlavor or text()) and not(@nullFlavor and text())">
-							<p>Text content is only allowed in non-NULL values.</p>
-						</sch:report>
-					</sch:rule>
-				</sch:pattern>
-			</xs:appinfo>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="ED">
