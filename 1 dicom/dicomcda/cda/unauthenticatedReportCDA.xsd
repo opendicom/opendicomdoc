@@ -155,7 +155,7 @@
 
 				<xs:element name="custodian">
 					<xs:annotation>
-						<xs:documentation>XDS Document Source (OID, name, URI)</xs:documentation>
+						<xs:documentation>OID, nombre, IHEInvokeImageDisplay base URL</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
