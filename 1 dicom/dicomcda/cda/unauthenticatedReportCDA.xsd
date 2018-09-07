@@ -263,7 +263,7 @@
 				<!-- DICOM request -->				
 				<xs:element name="documentationOf" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
-						<xs:documentation>solicitud relacionada al </xs:documentation>
+						<xs:documentation>solicitud relacionada</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
@@ -286,29 +286,10 @@
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
-										<xs:element name="Performer">
+										<xs:element name="Performer" type="ATNDassignedEntity">
 											<xs:annotation>
 												<xs:documentation>Identificación del servicio responsable de realizar la solicitud</xs:documentation>
 											</xs:annotation>
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="assignedEntity">
-														<xs:complexType>
-															<xs:sequence>
-																<xs:element name="id">
-																	<xs:complexType>
-																		<xs:attribute name="extension" type="DICOMORGSERV"/>
-																		<xs:attribute name="root" type="DICOMUI"/>
-																	</xs:complexType>
-																</xs:element>
-																<xs:element name="telecom" type="xs:anyURI"/>
-																<xs:element name="representedOrganization"/>
-															</xs:sequence>
-														</xs:complexType>
-													</xs:element>
-												</xs:sequence>
-												<xs:attribute name="typeCode" fixed="ATND"/>
-											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
 								</xs:complexType>
@@ -351,26 +332,10 @@
 										</xs:element>
 <!-- OPENDICOM-->										
 										<!-- DICOM performing -->				
-										<xs:element name="encounterParticipant">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="assignedEntity">
-														<xs:complexType>
-															<xs:sequence>
-																<xs:element name="id">
-																	<xs:complexType>
-																		<xs:attribute name="extension" type="DICOMORGSERV"/>
-																		<xs:attribute name="root" type="DICOMUI"/>
-																	</xs:complexType>
-																</xs:element>
-																<xs:element name="telecom" type="xs:anyURI"/>
-																<xs:element name="representedOrganization"/>
-															</xs:sequence>
-														</xs:complexType>
-													</xs:element>
-												</xs:sequence>
-												<xs:attribute name="typeCode" fixed="ATND"/>
-											</xs:complexType>
+										<xs:element name="encounterParticipant" type="ATNDassignedEntity">
+											<xs:annotation>
+												<xs:documentation>copia (eventualmente modificada de documentationOf/ServiceEvent/Performer</xs:documentation>
+											</xs:annotation>
 										</xs:element>
 <!-- /OPENDICOM-->
 										<xs:element name="location">
@@ -674,6 +639,42 @@
 			<xs:element name="telecom" type="xs:anyURI"/>
 		</xs:sequence>
 	</xs:complexType>
+
+	<xs:complexType name="ATNDassignedEntity">
+		<xs:sequence>
+			<xs:element name="assignedEntity">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="id">
+							<xs:complexType>
+								<xs:attribute name="extension" type="DICOMPNosp">
+									<xs:annotation>
+										<xs:documentation>org^servicio^profesional</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="root" type="DICOMUI">
+									<xs:annotation>
+										<xs:documentation>unidad ejecutora</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="telecom" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>contacto con médico o técnico a cargo</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="representedOrganization" type="HCENORG" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>en caso que la realización está subcontrada</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="typeCode" fixed="ATND"/>
+	</xs:complexType>
 	
 <!-- / RIDI HCEN complex types -->
 
@@ -736,9 +737,9 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:simpleType name="DICOMORGSERV">
+	<xs:simpleType name="DICOMPNosp">
 		<xs:annotation>
-			<xs:documentation>institucion^service^especialista (- o -^- finales autorizados cuando no son especificos)</xs:documentation>
+			<xs:documentation>institucion^service^profesional (- o -^- finales autorizados cuando no son especificos)</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:pattern value=".+(^.*)"></xs:pattern>
