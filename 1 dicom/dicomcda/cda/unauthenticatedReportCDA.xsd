@@ -30,10 +30,11 @@
 <!-- OPENDICOM -->				
 				<xs:element name="templateId">
 					<xs:complexType>
-						<xs:attribute name="root">
+						<xs:attribute name="root" type="DICOMUI">
+							<!--
 							<xs:simpleType>
 								<xs:restriction base="DICOMUI">
-									<xs:pattern value="2\.16\.858\.2\.10000675\.72591\.10014247\.[1-9]\d*\.\d">
+									<xs:pattern value="2\.16\.858\.2\.10000675\.72591\.10014247\.[1-9]\d*\.[1-9]">
 										<xs:annotation>
 											<xs:documentation>2.16.858=unaoid</xs:documentation>
 											<xs:documentation>2=objeto</xs:documentation>
@@ -46,6 +47,7 @@
 									</xs:pattern>
 								</xs:restriction>
 							</xs:simpleType>
+							-->
 						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
@@ -361,18 +363,13 @@
 							<xs:element name="structuredBody">
 								<xs:complexType>
 									<xs:sequence>
-										<!-- clinical information -->
-										<!-- imaging procedure description -->
-										<!-- comparison study -->
-										<!-- findings -->
-										<!-- impressiones -->
-										<!-- adendum -->
-										<xs:element name="component" maxOccurs="6">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="section" type="DICOMSection"/>
-												</xs:sequence>
-											</xs:complexType>
+										<xs:element name="component" type="component3" minOccurs="6" maxOccurs="6">
+											<xs:alternative test="position()=1" type="sectionClinicalInformation"/>
+											<xs:alternative test="position()=2" type="sectionImagingProcedure"/>
+											<xs:alternative test="position()=3" type="sectionComparisonStudy"/>
+											<xs:alternative test="position()=4" type="sectionFindings"/>
+											<xs:alternative test="position()=5" type="sectionImpression"/>
+											<xs:alternative test="position()=6" type="sectionAddendum"/>
 										</xs:element>
 									</xs:sequence>
 								</xs:complexType>
@@ -547,123 +544,240 @@
 		<xs:attribute name="displayName" type="DICOMLO"/>
 	</xs:complexType>
 
-	<xs:complexType name="DICOMSection" abstract="true"/>
+	<xs:complexType name="component3" abstract="true"/>
 
-	<xs:complexType name="DICOMSectionClinicalInformation">
+	<xs:complexType name="sectionClinicalInformation">
 		<xs:complexContent>
-			<xs:extension base="DICOMSection">
+			<xs:extension base="component3">
 				<xs:sequence>
-					<xs:element name="code">
+					<xs:element name="section">
 						<xs:complexType>
-							<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
-							<xs:attribute name="codeSystemName" fixed="LOINC"/>
-							<xs:attribute name="code" fixed="55752-0"/>
-							<xs:attribute name="displayName" fixed="Dato clínico"/>
+							<xs:sequence>
+								<xs:element name="code">
+									<xs:complexType>
+										<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+										<xs:attribute name="codeSystemName" fixed="LOINC"/>
+										<xs:attribute name="code" fixed="55752-0"/>
+										<xs:attribute name="displayName" fixed="Dato clínico"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="title" fixed="Dato clínico"/>
+								<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
+								<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="title" fixed="Dato clínico"/>
-					<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
-					<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	
 	<!-- siempre presente -->
-	<xs:complexType name="DICOMSectionImagingProcedure">
+	<xs:complexType name="sectionImagingProcedure">
 		<xs:complexContent>
-			<xs:extension base="DICOMSection">
+			<xs:extension base="component3">
 				<xs:sequence>
-					<xs:element name="code">
+					<xs:element name="section">
 						<xs:complexType>
-							<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
-							<xs:attribute name="codeSystemName" fixed="LOINC"/>
-							<xs:attribute name="code" fixed="55111-9"/>
-							<xs:attribute name="displayName" fixed="Procedimiento imagenológico"/>
+							<xs:sequence>
+								<xs:element name="code">
+									<xs:complexType>
+										<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+										<xs:attribute name="codeSystemName" fixed="LOINC"/>
+										<xs:attribute name="code" fixed="55111-9"/>
+										<xs:attribute name="displayName" fixed="Procedimiento imagenológico"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="title" fixed="Procedimiento imagenológico"/>
+								<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
+								<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
+								<xs:element name="component">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="section">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="templateId">
+															<xs:complexType>
+																<xs:attribute name="root" fixed="2.16.840.1.113883.10.20.6.1.1"/>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="code">
+															<xs:complexType>
+																<xs:attribute name="code" fixed="121181"/>
+																<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+																<xs:attribute name="codeSystemName" fixed="DCM"/>
+																<xs:attribute name="displayName" fixed="DICOM Object Catalog"/>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="entry">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="entry">
+																		<xs:complexType>
+																			<xs:sequence>
+																				<xs:element name="act">
+																					<xs:complexType>
+																						<xs:sequence>
+																							<xs:element name="templateId">
+																								<xs:complexType>
+																									<xs:attribute name="root" fixed="1.2.840.10008.9.16"/>
+																								</xs:complexType>
+																							</xs:element>
+																							<xs:element name="id">
+																								<xs:complexType>
+																									<xs:attribute name="root" type="DICOMUI">
+																										<xs:annotation>
+																											<xs:documentation>DICOM StudyUID</xs:documentation>
+																										</xs:annotation>
+																									</xs:attribute>
+																								</xs:complexType>
+																							</xs:element>
+																							<xs:element name="code">
+																								<xs:complexType>
+																									<xs:sequence>
+																										<xs:element name="qualifier" maxOccurs="unbounded">
+																											<xs:complexType>
+																												<xs:sequence>
+																													<xs:element name="name">
+																														
+																													</xs:element>
+																													<xs:element name="value"></xs:element>
+																												</xs:sequence>
+																											</xs:complexType>
+																										</xs:element>
+																									</xs:sequence>
+																									<xs:attribute name="code" fixed="113014"/>
+																									<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+																									<xs:attribute name="codeSystemName" fixed="DCM"/>
+																									<xs:attribute name="displayName" fixed="Study"/>
+																								</xs:complexType>
+																							</xs:element>
+																						</xs:sequence>
+																						<xs:attribute name="classCode" fixed="ACT"/>
+																						<xs:attribute name="moodCode" fixed="EVN"/>
+																					</xs:complexType>
+																				</xs:element>
+																			</xs:sequence>
+																		</xs:complexType>
+																	</xs:element>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+													<xs:attribute name="classCode" fixed="DOCSECT"/>
+													<xs:attribute name="moodCode" fixed="EVN"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="title" fixed="Procedimiento imagenológico"/>
-					<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
-					<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	
-	<xs:complexType name="DICOMSectionComparisonStudy">
+	<xs:complexType name="sectionComparisonStudy">
 		<xs:complexContent>
-			<xs:extension base="DICOMSection">
+			<xs:extension base="component3">
 				<xs:sequence>
-					<xs:element name="code">
+					<xs:element name="section">
 						<xs:complexType>
-							<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
-							<xs:attribute name="codeSystemName" fixed="LOINC"/>
-							<xs:attribute name="code" fixed="18834-2"/>
-							<xs:attribute name="displayName" fixed="Estudio previo"/>
+							<xs:sequence>
+								<xs:element name="code">
+									<xs:complexType>
+										<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+										<xs:attribute name="codeSystemName" fixed="LOINC"/>
+										<xs:attribute name="code" fixed="18834-2"/>
+										<xs:attribute name="displayName" fixed="Estudio previo"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="title" fixed="Estudio previo"/>
+								<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
+								<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="title" fixed="Estudio previo"/>
-					<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
-					<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	
-	<xs:complexType name="DICOMSectionFindings">
+	<xs:complexType name="sectionFindings">
 		<xs:complexContent>
-			<xs:extension base="DICOMSection">
+			<xs:extension base="component3">
 				<xs:sequence>
-					<xs:element name="code">
+					<xs:element name="section">
 						<xs:complexType>
-							<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
-							<xs:attribute name="codeSystemName" fixed="LOINC"/>
-							<xs:attribute name="code" fixed="59776-5"/>
-							<xs:attribute name="displayName" fixed="Hallazgos"/>
+							<xs:sequence>
+								<xs:element name="code">
+									<xs:complexType>
+										<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+										<xs:attribute name="codeSystemName" fixed="LOINC"/>
+										<xs:attribute name="code" fixed="59776-5"/>
+										<xs:attribute name="displayName" fixed="Hallazgos"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="title" fixed="Hallazgos"/>
+								<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
+								<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="title" fixed="Hallazgos"/>
-					<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
-					<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	
-	<xs:complexType name="DICOMSectionImpression">
+	<xs:complexType name="sectionImpression">
 		<xs:complexContent>
-			<xs:extension base="DICOMSection">
+			<xs:extension base="component3">
 				<xs:sequence>
-					<xs:element name="code">
+					<xs:element name="section">
 						<xs:complexType>
-							<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
-							<xs:attribute name="codeSystemName" fixed="LOINC"/>
-							<xs:attribute name="code" fixed="19005-8"/>
-							<xs:attribute name="displayName" fixed="Impresiones"/>
+							<xs:sequence>
+								<xs:element name="code">
+									<xs:complexType>
+										<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+										<xs:attribute name="codeSystemName" fixed="LOINC"/>
+										<xs:attribute name="code" fixed="19005-8"/>
+										<xs:attribute name="displayName" fixed="Impresiones"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="title" fixed="Impresiones"/>
+								<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
+								<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="title" fixed="Impresiones"/>
-					<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
-					<xs:element name="entry" type="entry" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	
-	<xs:complexType name="DICOMSectionAddendum">
+	<xs:complexType name="sectionAddendum">
 		<xs:complexContent>
-			<xs:extension base="DICOMSection">
+			<xs:extension base="component3">
 				<xs:sequence>
-					<xs:element name="code">
+					<xs:element name="section">
 						<xs:complexType>
-							<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
-							<xs:attribute name="codeSystemName" fixed="LOINC"/>
-							<xs:attribute name="code" fixed="8653-8"/>
-							<xs:attribute name="displayName" fixed="Aviso legal"/>
+							<xs:sequence>
+								<xs:element name="code">
+									<xs:complexType>
+										<xs:attribute name="codeSystem" fixed="1.2.840.10008.2.16.4"/>
+										<xs:attribute name="codeSystemName" fixed="LOINC"/>
+										<xs:attribute name="code" fixed="8653-8"/>
+										<xs:attribute name="displayName" fixed="Aviso legal"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="title" fixed="Aviso legal"/>
+								<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
+							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="title" fixed="Aviso legal"/>
-					<xs:element name="text" type="StrucDoc.Text" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
