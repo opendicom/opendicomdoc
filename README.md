@@ -18,6 +18,6 @@ La arquitectura de software incluye tres niveles superpuestos relacionados por A
 
 La documentación está subdividida entre estos tres niveles.
 
-Agregamos un capitulo dedicado a síntesis escritas en lenguaje simple y enfocando las bondades del producto. Los articulos en este capitulo convencen el comprador que html5dicom + httpdicom brinda solución a casos de uso dónde las limitaciones de los otros sistemas competidores son patentes.
+Agregamos un capitulo 4. dedicado a síntesis escritas en lenguaje simple y enfocando las bondades del producto. Los articulos en este capitulo convencen el comprador que html5dicom + httpdicom brinda solución a casos de uso dónde las limitaciones de los otros sistemas competidores son patentes.
 
-Finalizamos la documentación con anexos que definen precisamente formatos de información usados por html5dicom y httpdicom.
+Finalizamos la documentación con anexos 5. que definen precisamente formatos de información usados por html5dicom y httpdicom.
