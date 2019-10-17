@@ -1,5 +1,5 @@
 # docditaes
-(documentación de html5dicom y httpdicom en español)
+(DOCumentación en formato DITA de html5dicom y httpdicom en ESpañol)
 
 Opendicom diseña soluciones para facilitar el acceso a la imagenología médica fuera de la clínica.
 
@@ -11,9 +11,9 @@ Sus desarrollos se inspiran esencialmente en dos partes del estándar DICOM:
 La arquitectura de software incluye tres niveles superpuestos relacionados por API claramente definido:
 
 
-1. La base está constituida por la infraestructura DICOM existente, incluyendo redes locales e internet. A este nivel agregamos un servidor PACS dcm4chee-arc de última generación como proxy de comunicación DICOM local.
-1. httpdicom interactua con la base y presenta servicios REST que pueden ser consumidos por RIS/HIS y cualquier programa que necesita datos de imagenología médica.
-1. html5dicom es un ejemplo de estos programas que consumen servicios de httpdicom. Permite la interacción del usuario mediante comunicación html5 (teleradiología-telediagnóstico). Dentro de las función provistas, listamos control de acceso, búsqueda de estudios, visualización y descarga de estudios, edición de informes médicos.                                                                                                                                                                                                             
+1. La base está constituida por las infraestructuras DICOM existentes, incluyendo servidores, por ejemplo el PACS dcm4chee-arc.
+2. httpdicom interactua con los nodos de la infraestructura DICOM y presenta servicios REST que pueden ser consumidos por RIS/HIS y cualquier programa que necesita datos de imagenología médica. Este nivel no incluye gestión de usuarios ni de sesión
+3. html5dicom es un ejemplo de estos programas que consumen servicios de httpdicom. Permite la interacción del usuario mediante comunicación html5 (teleradiología-telediagnóstico). Dentro de las función provistas, listamos control de acceso, búsqueda de estudios, visualización y descarga de estudios, edición de informes médicos.                                                                                                                                                                                                             
 
 
 La documentación está subdividida entre estos tres niveles.
