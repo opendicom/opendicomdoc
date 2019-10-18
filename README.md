@@ -1,5 +1,5 @@
-# docditaes
-(DOCumentación en formato DITA de html5dicom y httpdicom en ESpañol)
+# opendicomdoc
+(documentación de los productos de opendicom)
 
 Opendicom diseña soluciones para facilitar el acceso a la imagenología médica fuera de la clínica.
 
