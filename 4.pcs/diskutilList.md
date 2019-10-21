@@ -1,4 +1,4 @@
-# $ diskutil list
+### $ diskutil list
 
 /dev/disk0 (internal, physical):
 
