@@ -43,11 +43,14 @@ Distinguimos 3 tipos de servicios:
 puerto | servicio | auth | descripción
 ---|---|---|---
 22 | ssh | admin | para servicio
-80 y 443 | nginx | publico | puerta única tls de acceso a todos los servicios públicos
+80 y 443 | nginx | publico | puerta TLS única para sessiones de usuarios web y rest html5dicom
+1189 | admin | ldap
 11112 | storescp | privado | usado por dcmtk storescp para hacer triage de los objetos DICOM recibidos antes de verificarlos e integrar al PACS mediante spoolstow 
-11113 | dcm4chee-arc | admin | pacs integrado
+11113 | dcm4chee-arc dicom | admin | pacs integrado
 11114 | httpdicom | privado | proxy rest de pacs
-11115 | html5dicom | publico | gestor de usuarios, sessiones, interfaz gráfico, administrador de informes
-2575 | mirthconnect | privado | recepción y procesamiento de mensajes hl7
+11115 | mwl5dicom | privado | usado cuando la lista de trabajo era independiente (ahora está integrado con httpdicom)
+2575 | mirthconnect canal HL7 | privado | canal mirth de recepción y procesamiento de mensajes hl7
+8080 | dcm4chee-arc http | admin | GUI y REST del PACS
 3306 | mariadb | admin | base de datos
 5900 | vnc | admin | acceso al interfaz gráfica del PCS
+18080 | mirthconnect http | admin | GUI de configuración de mirthConnect
