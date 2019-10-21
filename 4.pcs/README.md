@@ -35,15 +35,19 @@ DOCKER | los paquetes docker de servicios dockerizados
 
 ## Servicios
 
-puerto | servicio | descripción
+Distinguimos 3 tipos de servicios:
+- publicos (compartidos en internet)
+- privados (compartidos localmente o mediante VPN)
+- admin (reservados a la administración de la solución)
+
+puerto | servicio | auth | descripción
 ---|---|---
-22 | ssh | para servicio
-80 | nginx | tls
-443 | nginx | tls
-11112 | storescp | usado por dcmtk storescp para hacer triage de los objetos DICOM recibidos antes de verificarlos e integrar al PACS mediante spoolstow 
-11113 | dcm4chee-arc | pacs integrado
-11114 | httpdicom | proxy rest de pacs
-11115 | html5dicom | gestor de usuarios, sessiones, interfaz gráfico, administrador de informes
-2575 | mirthconnect | recepción y procesamiento de mensajes hl7
-3306 | mariadb | base de datos
-5900 | vnc | acceso al interfaz gráfica del PCS
+22 | ssh | admin | para servicio
+80 y 443 | nginx | publico | puerta única tls de acceso a todos los servicios públicos
+11112 | storescp | privado | usado por dcmtk storescp para hacer triage de los objetos DICOM recibidos antes de verificarlos e integrar al PACS mediante spoolstow 
+11113 | dcm4chee-arc | admin | pacs integrado
+11114 | httpdicom | privado | proxy rest de pacs
+11115 | html5dicom | publico | gestor de usuarios, sessiones, interfaz gráfico, administrador de informes
+2575 | mirthconnect | privado | recepción y procesamiento de mensajes hl7
+3306 | mariadb | admin | base de datos
+5900 | vnc | admin | acceso al interfaz gráfica del PCS
