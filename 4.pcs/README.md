@@ -2,7 +2,7 @@
 
 Por defecto instalamos toda la solución en una sola máquina con sistema operativo MacOS dedicada que llamamos PCS (Picture Communication System). Podemos agregarle funcionalidad de PACS cuando le agregamos a esta máquina un NAS seguro para almacenamiento duradero.
 
-El hardware por defecto es la mac mini, con un SSD 120GB y un HD 1TB con instalación muy específica. A los modelos que vienen con un solo SSD se debe conectar un HD externo.
+El hardware por defecto es la mac mini, con un mínimo de un SSD 120GB y de un HD 1TB con instalación muy específica. A los modelos que vienen con un solo SSD se debe conectar un HD externo de preferencia un NAS con RAID6.
 
 ## Sistema operativo
 
@@ -33,5 +33,17 @@ DOCKER | los paquetes docker de servicios dockerizados
 
 [Ver el listado completo de las particiones](diskutilList.md)
 
+## Servicios
 
-
+puerto | servicio | descripción
+---|---|---
+22 | ssh | para servicio
+80 | nginx | tls
+443 | nginx | tls
+11112 | storescp | usado por dcmtk storescp para hacer triage de los objetos DICOM recibidos antes de verificarlos e integrar al PACS mediante spoolstow 
+11113 | dcm4chee-arc | pacs integrado
+11114 | httpdicom | proxy rest de pacs
+11115 | html5dicom | gestor de usuarios, sessiones, interfaz gráfico, administrador de informes
+2575 | mirthconnect | recepción y procesamiento de mensajes hl7
+3306 | mariadb | base de datos
+5900 | vnc | acceso al interfaz gráfica del PCS
