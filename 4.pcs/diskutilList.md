@@ -2,7 +2,7 @@
 
 /dev/disk0 (internal, physical):
 
- | TYPE | NAME | SIZE | IDENTIFIER
+\# | TYPE | NAME | SIZE | IDENTIFIER
 ---|---|---|---|---
 0 | GUID_partition_scheme || 121.3 GB | disk0
 1 | EFI EFI || 209.7 MB | disk0s1
@@ -11,7 +11,7 @@
 
 /dev/disk1 (internal, physical):
 
- | TYPE | NAME | SIZE | IDENTIFIER
+\# | TYPE | NAME | SIZE | IDENTIFIER
 ---|---|---|---|---
 0 | GUID_partition_scheme | | *1.0 TB | disk1
 1 | EFI EFI | | 209.7 MB | disk1s1
@@ -22,7 +22,7 @@
 
 /dev/disk2 (synthesized):
 
- | TYPE | NAME | SIZE | IDENTIFIER
+\# | TYPE | NAME | SIZE | IDENTIFIER
 ---|---|---|---|---
 0 | APFS Container Scheme | - | +81.1 GB | disk2 Physical Store disk0s2
 1 | APFS Volume | SSD - Datos | 57.5 GB | disk2s1
@@ -33,35 +33,35 @@
 
 /dev/disk3 (synthesized):
 
- | TYPE | NAME | SIZE | IDENTIFIER
+\# | TYPE | NAME | SIZE | IDENTIFIER
 ---|---|---|---|---
 0 | APFS Container Scheme | - | +80.0 GB | disk3 Physical Store disk1s2
 1 | APFS Volume | HD | 954.4 KB | disk3s1
 
 /dev/disk4 (synthesized):
 
- | TYPE | NAME | SIZE | IDENTIFIER
+\# | TYPE | NAME | SIZE | IDENTIFIER
 ---|---|---|---|---
 0 | APFS Container Scheme | - | +40.0 GB | disk4 Physical Store disk0s3
 1 | APFS Volume | IN | 725.0 KB | disk4s1
 
 /dev/disk5 (synthesized):
 
- | TYPE | NAME | SIZE | IDENTIFIER
+\# | TYPE | NAME | SIZE | IDENTIFIER
 ---|---|---|---|---
 0 | APFS Container Scheme | - | +40.0 GB | disk5 Physical Store disk1s3
 1 | APFS Volume | IN(HD) | 938.0 KB | disk5s1
 
 /dev/disk6 (synthesized):
 
- | TYPE | NAME | SIZE | IDENTIFIER
+\# | TYPE | NAME | SIZE | IDENTIFIER
 ---|---|---|---|---
 0 | APFS Container Scheme | - | +254.9 GB | disk6 Physical Store disk1s4
 1 | APFS Volume | TM  | 987.1 KB | disk6s1
 
 /dev/disk7 (synthesized):
 
- | TYPE | NAME | SIZE | IDENTIFIER
+\# | TYPE | NAME | SIZE | IDENTIFIER
 ---|---|---|---|---
 0 | APFS Container Scheme | - | +625.1 GB | disk7 Physical Store disk1s5
 1 | APFS Volume | LOG | 32.8 KB | disk7s1
