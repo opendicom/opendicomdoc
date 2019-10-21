@@ -41,7 +41,7 @@ Distinguimos 3 tipos de servicios:
 - admin (reservados a la administración de la solución)
 
 puerto | servicio | auth | descripción
----|---|---
+---|---|---|---
 22 | ssh | admin | para servicio
 80 y 443 | nginx | publico | puerta única tls de acceso a todos los servicios públicos
 11112 | storescp | privado | usado por dcmtk storescp para hacer triage de los objetos DICOM recibidos antes de verificarlos e integrar al PACS mediante spoolstow 
