@@ -23,13 +23,15 @@ En caso de falla de SSD, para perder lo menos posible de lo más reciente, cream
 
 El resto del HD es una gran partición subdividida en volumenes compartiendo un mismo espacio físico que simplifiquen la administración de la solución. Se tratan de los volúmenes siguientes:
 
-- LOG : los archivos de log de todos los servicios
-- TMP : los archivos temporales de todos los servicios
-- DICOM : los archivos del PACS clasificados por carpetas año, mes, día, hora, estudio, serie
-- GITHUB : el código de los servicios actualizados por github
-- DOCKER : los paquetes docker de servicios dockerizados
+nombre | descripción
+---|---
+LOG | los archivos de log de todos los servicios
+TMP | los archivos temporales de todos los servicios
+DICOM | los archivos del PACS clasificados por carpetas año, mes, día, hora, estudio, serie
+GITHUB | el código de los servicios actualizados por github
+DOCKER | los paquetes docker de servicios dockerizados
 
-[diskutilList.txt](Ver el listado completo de las particiones)
+[Ver el listado completo de las particiones](diskutilList.md)
 
 
 
