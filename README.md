@@ -8,7 +8,7 @@ Opendicom brinda soluciones para facilitar el acceso a la imagenología médica 
 
 La arquitectura de software incluye tres niveles superpuestos relacionados por API claramente definido:
 
-1. La base está constituida por las infraestructuras DICOM existentes, aplicaciones, sistema de archivos y base de datos de PACS, por ejemplo el PACS dcm4chee-arc.
+1. La base **dicom** es constituida por las infraestructuras DICOM existentes, aplicaciones, sistema de archivos y base de datos de PACS, por ejemplo el PACS dcm4chee-arc.
 2. **httpdicom** interactua con uno o más nodos de la infraestructura DICOM y publica servicios REST para su consumo por aplicaciones de RIS/HIS del hospital y cualquier programa que necesita datos de imagenología médica. Este nivel no incluye gestión de usuarios ni de sesión
 3. **html5dicom** es un ejemplo de estos programas que consumen servicios de httpdicom. Permite la interacción del usuario mediante comunicación html5 (teleradiología-telediagnóstico). Dentro de las función provistas, listamos control de acceso, búsqueda de estudios, visualización y descarga de estudios, edición de informes médicos.                                                                                                                                                                                                             
 
@@ -21,7 +21,7 @@ La presente documentación dedica un capitulo a cada uno de estos productos.
 
 Capitulo 6 está dedicado a la instalación. 
 
-Capitulo 7 está dedicado al servicio. 
+Capitulo 7 está dedicado al servicio de reparación. 
 
 Capitulo 8 es una síntesis escritas en lenguaje simple enfocando a la apología del producto.
 
