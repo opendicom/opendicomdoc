@@ -30,4 +30,19 @@ Finalizamos la documentación con el capitulo 9 para los anexos que definen prec
 
 ## Articulación de los componentes entre sí
 
+Los sisteemas propios de la institución están en negro. Nuestras aplicaciones están en color.
+
+Lineas separamos el diagrama en 4 dominios (desde abajo):
+
+- red dicom de producción 
+- backend (nunca directamente expuesto a internet directamente por razones de seguridad)
+- frontend expuesto a internet, pero con seguridad por usuario y sessión de trabajo
+- clientes (esencialmente navegadores, pero también estaciones de trabajo, por ejemplo OsiriX u Horos)
+
+pacs, httpdicom y html5dicom son imprescriptibles. 
+
+storedicom es opcional pero necesario cuando un mismo pacs contiene los objetos DICOM de varias sucursales
+
+mwldicom es opcional pero necesario cuando se quiere instalar accesos diferenciados para radiologo / medico / paciente etc. mwldicom requiere storedicom para normalizar los datos que entran en el pacs.
+
 ![coreografía](coreografia.png)
