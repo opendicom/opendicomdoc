@@ -30,7 +30,7 @@ Finalizamos la documentación con el capitulo 9 para los anexos que definen prec
 
 ## Articulación de los componentes entre sí
 
-Los sisteemas propios de la institución están en negro. Nuestras aplicaciones están en color.
+Los sistemas propios de la institución están en negro. Nuestras aplicaciones están en color.
 
 Lineas separan el diagrama en 4 dominios (desde abajo):
 
