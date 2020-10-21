@@ -26,3 +26,6 @@ Capitulo 7 está dedicado al servicio de reparación.
 Capitulo 8 es una síntesis escritas en lenguaje simple enfocando a la apología del producto.
 
 Finalizamos la documentación con el capitulo 9 para los anexos que definen precisamente formatos de información usados por html5dicom y httpdicom.
+
+
+## Articulación de los componentes entre sí
