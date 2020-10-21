@@ -30,4 +30,4 @@ Finalizamos la documentación con el capitulo 9 para los anexos que definen prec
 
 ## Articulación de los componentes entre sí
 
-![coreografía](coreografia.pdf)
+![coreografía](coreografia.png)
