@@ -16,9 +16,9 @@ Este directorio contiene 7 subdirectorios:
 
 - ARRIVED
 - CLASSIFIED
-- COERCED
 - DISCARDED
 - ORIGINALS
+- COERCED
 - REJECTED
 - STORED
 
@@ -35,7 +35,22 @@ ARRIVED y CLASSIFIED están usados por dcmtk. dcmtk:
   - el nombre del objeto esta formado por el SOPInstanceUID_unixTime
       - unixTime es la cantidad de segundos desde 1970-01-01 00:00:00 y permite diferenciar dos copias distintas de una misma instancia.
 
+## CLASSIFIED, DISCARDED y ORIGINAL
 
+CLASSIFIED es el directorio "spool" que storedicom visita para encontrar nuevos objetos a procesar.
 
+El proceso incluye coerción de metadata y compresión de imagen
 
+Si el objeto está procesado sin inconveniente, el original antes proceso está reubicado en una estructura similar a la de CLASSIFIED, pero dentro de ORIGINAL
 
+Si el objeto no pudo ser procesado, está reubicado en una estructura similar a la de CLASSIFIED, pero dentro de  DISCARDED
+
+## COERCED, REJECTED y STORED
+
+COERCED es el directorio dónde está creado el objeto que pasó por el proceso de coerción y compresión.
+
+Desde ahí esta reubicado a REJECTED si el PACS no puede recibirlo.
+
+O esta reubicado 
+
+![spoolBuckets](spoolBuckets.png)
