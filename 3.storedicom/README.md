@@ -1,6 +1,19 @@
 # storedicom
 
-Permite la verificación y normalización de los objetos DICOM creados por las modalidades antes que entren en el repositorio definitivo, o sea el PACS.
+Storedicom permite la verificación y normalización de los objetos DICOM creados por las modalidades antes que entren en el repositorio definitivo, o sea el PACS.
+
+Storedicom está disponible solo para PACS que soportan DICOMweb STORE (antes llamado stow), es decir la posibilidad de mandar varios objetos dicom por http post.
+
+Funcionalidades de storedicom:
+- agrupar objetos y mandarlos más allá de una red local insegura a un servidor remoto.
+- comprimir las imágenes en jpeg 2000 sin pérdida antes de atravesar un enlace con ancho de banda limitado
+- verificar previo al envio la identificación correcta (o compatible) del paciente con los objetos ya presentes en el pacs de destino
+- uniformizar los nombres de instituciones
+- ...
+
+En una futura nueva versión, storedicom usará pipedicom para procesar las imágenes.
+
+## Funcionamiento
 
 Storedicom recibe los objetos por servicio STORE SCP como si fuese un PACS, pero les hace pasar por un pipeline de verificación y modificación y finalmente intenta enviarlos al PACS por protocolo STORE DICOMweb.
 
