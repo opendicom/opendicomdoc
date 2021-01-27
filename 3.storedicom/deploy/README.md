@@ -4,7 +4,7 @@
 
 storedicom usa un directorio y subdirectorios para conservar los resultados de las varias etapas del procesamiento de los objetos dicom recibidos. En instalaciones de mucho tráfico, es aconsejable ubicar este directorio en un partición distinta del sistema operativo sobre un almacenamiento de tipo ssd dentro del servidor, pues rápido y siempre accesible. Nuestra ubicación preferida es un volumen llamado IN:
 
-/Volumes/IN/aetDeRecepción/
+/Volumes/IN/custodian.aet.puerto/
 
 ## Ubicación del directorio de aplicación
 
@@ -17,8 +17,8 @@ Lo especifico a storescp
 - storescp (ejecutable abierto permanentemente para recibir los nuevos objetos DICOM. Este ejecutable es usado tal como viene en la caja de herramientas dcmtk)
 - dicom.dic (en caso que no fue integrado directamente dentro del ejecutable durante la compilación, complemento necesario de storescp que contiene el diccionario de atributos DICOM)
 - classifier.sh (script ejecutado al finalizar la recepción por dcmtk para clasificar los estudios recibidos dentro de la subcarpeta CLASSIFIED)
-- LaunchDaemons/org.dcmtk.storescp.custodian.aetscp.104.plist (el nombre es específico para cada instalación. Luego de la parte común org.dcmtk.storescp se agregan el custodian, el aet y el puerto de recepción y finalmente la extensión .plist. Este archivo lista los parámetros invocados cada vez que se inicia storescp )
-- org.dcmtk.storescp.custodian.aetscp.log (llamado acorde al nombre del aet de recepción. Contiene el log de dcmtk storescp. es un alias al archivo verdadero a crear en /Volumes/LOG/org.dcmtk.storescp.custodian.aetscp.log )
+- copy_to_Library_LaunchDaemons/org.dcmtk.storescp.custodian.aet.puerto.plist (el nombre es específico para cada instalación. Luego de la parte común org.dcmtk.storescp se agregan el custodian, el aet y el puerto de recepción y finalmente la extensión .plist. Este archivo lista los parámetros invocados cada vez que se inicia storescp )
+- org.dcmtk.storescp.custodian.aet.puerto.log (llamado acorde al nombre del aet de recepción. Contiene el log de dcmtk storescp. es un alias al archivo verdadero a crear en /Volumes/LOG/org.dcmtk.storescp.custodian.aetscp.log )
 
 Lo especifico a storedicom
 
