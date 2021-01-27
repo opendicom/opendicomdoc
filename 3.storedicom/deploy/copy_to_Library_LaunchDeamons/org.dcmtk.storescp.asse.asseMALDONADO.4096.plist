@@ -7,7 +7,7 @@
 	<key>EnvironmentVariables</key>
 	<dict>
 		<key>DCMDICTPATH</key>
-		<string>/Users/Shared/storescp/dicom.dic</string>
+		<string>/Users/Shared/storedicom/dicom.dic</string>
 	</dict>
 	<key>KeepAlive</key>
 	<true/>
@@ -15,7 +15,7 @@
 	<string>org.dcmtk.storescp.asse.asseMALDONADO.4096.plist</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/Users/Shared/storescp/storescp</string>
+		<string>/Users/Shared/storedicom/storescp</string>
 		<string>-ll</string>
 		<string>warn</string>
 		<string>--fork</string>
@@ -27,12 +27,14 @@
 		<string>131072</string>
 		<string>-dhl</string>
 		<string>-up</string>
+		<string>-g</string>
+		<string>-e</string>
 		<string>-od</string>
 		<string>/Volumes/IN/asse.asseMALDONADO.4096/ARRIVED/</string>
 		<string>-su</string>
 		<string>-uf</string>
 		<string>-xcr</string>
-		<string>/Users/Shared/storescp/classifier.sh #a #r #p #f</string>
+		<string>/Users/Shared/storedicom/classifier.sh #a #r #p #f</string>
 		<string>4096</string>
 	</array>
 	<key>StandardErrorPath</key>
