@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<false/>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>DCMDICTPATH</key>
+		<string>/Users/Shared/storescp/dicom.dic</string>
+	</dict>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>org.dcmtk.storescp.asseMALDONADO.4096.plist</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Users/Shared/storescp/storescp</string>
+		<string>-ll</string>
+		<string>warn</string>
+		<string>--fork</string>
+		<string>-pm</string>
+		<string>+xa</string>
+		<string>-aet</string>
+		<string>wfmFIR</string>
+		<string>-pdu</string>
+		<string>131072</string>
+		<string>-dhl</string>
+		<string>-up</string>
+		<string>-od</string>
+		<string>/Volumes/IN/asseMALDONADO/ARRIVED/</string>
+		<string>-su</string>
+		<string></string>
+		<string>-uf</string>
+		<string>-xcr</string>
+		<string>/Users/Shared/storescp/classifier.sh #a #r #p #f</string>
+		<string>4096</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/Volumes/LOG/asseMALDONADO.log</string>
+	<key>StandardOutPath</key>
+	<string>/Volumes/LOG/asseMALDONADO.log</string>
+	<key>Umask</key>
+	<integer>0</integer>
+</dict>
+</plist>
