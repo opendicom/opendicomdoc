@@ -20,6 +20,7 @@
 		<string>warn</string>
 		<string>--fork</string>
 		<string>-pm</string>
+		<string>+x=</string>
 		<string>+xa</string>
 		<string>-aet</string>
 		<string>asseMALDONADO</string>
