@@ -15,7 +15,7 @@ Contiene:
 Lo especifico a storescp
 
 - storescp (ejecutable abierto permanentemente para recibir los nuevos objetos DICOM. Este ejecutable es usado tal como viene en la caja de herramientas dcmtk)
-- dicom.dic (complemento necesario de storescp que contiene el diccionario de atributos DICOM)
+- dicom.dic (en caso que no fue integrado directamente dentro del ejecutable durante la compilación, complemento necesario de storescp que contiene el diccionario de atributos DICOM)
 - classifier.sh (script ejecutado al finalizar la recepción por dcmtk para clasificar los estudios recibidos dentro de la subcarpeta CLASSIFIED)
 - LaunchDaemons/org.dcmtk.storescp.custodian.aetscp.104.plist (el nombre es específico para cada instalación. Luego de la parte común org.dcmtk.storescp se agregan el custodian, el aet y el puerto de recepción y finalmente la extensión .plist. Este archivo lista los parámetros invocados cada vez que se inicia storescp )
 - org.dcmtk.storescp.custodian.aetscp.log (llamado acorde al nombre del aet de recepción. Contiene el log de dcmtk storescp. es un alias al archivo verdadero a crear en /Volumes/LOG/org.dcmtk.storescp.custodian.aetscp.log )
