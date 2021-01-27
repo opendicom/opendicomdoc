@@ -17,7 +17,10 @@ En una futura nueva versión, storedicom usará pipedicom para procesar las imá
 
 Storedicom recibe los objetos por servicio STORE SCP como si fuese un PACS, pero les hace pasar por un pipeline de verificación y modificación y finalmente intenta enviarlos al PACS por protocolo STORE DICOMweb.
 
-La aplicación storedicom se coloca dentro de la red imagenológica y se configura como SCP (aet, ip, puerto) de destino de las operaciones DICOM STORE SCU realizadas por las modalidades de adquisición de imágenes médicas (CR, DX, CT, MR, etc). Usamos el utilitario STORE SCP de la caja de herramientas de código libre **dcmtk**, muy confiable y universal para recibir los objetos.
+La aplicación storedicom se coloca dentro de la red imagenológica y se configura como SCP (aet, ip, puerto) de destino de las operaciones DICOM STORE SCU realizadas por las modalidades de adquisición de imágenes médicas (CR, DX, CT, MR, etc). Usamos el utilitario STORE SCP de la caja de herramientas de código libre **dcmtk**, muy confiable y universal para recibir los objetos. dcmtk está configurado:
+- con las opciones más liberales posibles (acepta todo lo que entra),
+- elimina las indicaciones de tamaño de grupos
+- reemplaza eventuales tamaños de sequencias y/o items por la sintaxis con markup de fin de serie y de fin de sequence.
 
 El pipeline de procesamiento de los objetos DICOM recibidos está materializado por una estructura de directorios, dentro de la cual los objetos están desplazados a medida que avanza su procesamiento.
 
