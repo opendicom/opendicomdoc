@@ -18,7 +18,7 @@ Es decir que la estructura objectiva de la metadata (independientemnte de su mod
 
 ## map: una representación mejor para DICOM?
 
-Mejor en este contexto significa más sencillo de escribir, leer y modificar. Dentro de la categoria de modelos de metadatos indexados, más senncillo que JSON, solo queda el "map". O sea, la correspondencia key-value dentro de una lista sin profundidad. Tal modelo está incorporado en la mayoría de los lenguajes de programación modernos, incluyendo algoritmos de creación, introspección y modificación.
+Mejor en este contexto significa más sencillo de escribir, leer y modificar. Dentro de la categoria de modelos de metadatos indexados, más sencillo que JSON, solo queda "map". O sea, la correspondencia key-value dentro de una lista sin profundidad. Tal modelo está incorporado en la mayoría de los lenguajes de programación modernos, que incluyen funciones de creación, introspección y modificación.
 
 La dificuldad de uso de este modelo de datos para DICOM es la profundidad de los objetos de información. Se supera con reemplazar la key de un atributo por una key compuesta de todos los niveles de profundidad precisando el contexto además del significado del atributo. Para decirlo con una analogía referenciandose al ecosystema xml, se trata de reemplazar el nombre del elemento por el XPath que apunta al elemento.
 
