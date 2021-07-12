@@ -24,7 +24,8 @@ La dificuldad de uso de este modelo de datos para DICOM es la profundidad de los
 
 Esta idea es al origen del desarrollo de DCKV (DICOM Contextualized Key Values).
 
-Ejemplo de key en DCKV: 
+Ejemplo de key en DCKV:
+
 ```"00000001_00081032.00000001_00080104-1100LO": [ "UPPER GI SERIES (STOMACH)" ]```
 
 Usamos la notación JSON pero el modelado es independiente de JSON.
@@ -37,7 +38,7 @@ Para la explicación del key definimos dos categorias de atributos DICOM en func
 - atributoHorizontal (incluyendo todos los otros tipos de atributos)
 
 
-Key puede analizarse entonces por partes: 
+substrings de key: 
 
 - ```nroItem_atributoVertical.``` 
 se repite para cada nivel del contexto
