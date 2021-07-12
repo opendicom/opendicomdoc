@@ -15,6 +15,7 @@ La arquitectura de software incluye tres niveles superpuestos relacionados por A
 Además proveemos dos módulos para la puesta en funcionamiento de las listas de trabajo (Modality WorkList):
 
 **storedicom** se interpone entre las modalidades de adquisición y un PACS capaz de recibir archivos a traves de http. La función de spoolstow es de validar los objetos DICOM que se reciben, normalizar ciertos atributos, como por ejemplo el nombre de la institución y comprimir la data de las imágenes en jpeg 2000.
+
 **mwldicom** brinda un interfaz rest de uso sencillo para gestionar una lista de trabajo (Modality WorkList).                                                                                                                                                                                                          
 
 
@@ -36,3 +37,4 @@ storedicom es opcional pero necesario cuando un mismo pacs contiene los objetos 
 mwldicom es opcional pero necesario cuando se quiere instalar accesos diferenciados para radiólogo / médico / paciente, etc. mwldicom requiere storedicom para normalizar los datos que entran en el pacs.
 
 ![coreografía](coreografia.png)
+
