@@ -35,17 +35,18 @@ Parte values (en este caso un solo valor): UPPER GI SERIES (STOMACH)
 Para la explicación del key definimos dos categorias de atributos DICOM en función del tipo de datos:
 - atributoVertical (caracterizando exclusivamente los atributos de tipo secuencia)
 - atributoHorizontal (incluyendo todos los otros tipos de atributos)
-- 
+
+
 Key puede analizarse entonces por partes: 
 
-```nroItem_atributoVertical.``` 
+- ```nroItem_atributoVertical.``` 
 se repite para cada nivel del contexto
 
-esta finalizado con la ocurrencia de  
+- esta finalizado con la ocurrencia de  
 ```nroItem_etiquetaDeAttributoDICOM-```
  (un guión al final en lugar del punto) 
  
-Finalmente se agrega la sigla oficial DICOM del tipo de dato del atributo (en este caso "LO", LOng string), eventualmente presentado de una información sobre el charest usado en el valor. "1100" corresponde a latin1. 
+- se agrega la sigla oficial DICOM del tipo de dato del atributo (en este caso "LO", LOng string), eventualmente presentado de una información sobre el charest usado en el valor. "1100" corresponde a latin1. 
 
 El string del ejemplo puede ser usado como key json. Cuando json está transformado en map, por ejemplo en un script javascript, cualquier valor de la lista puede referenciarse con la syntaxis 
 ```lista[key][índice del valor]```
