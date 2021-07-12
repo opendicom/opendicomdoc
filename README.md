@@ -38,3 +38,18 @@ mwldicom es opcional pero necesario cuando se quiere instalar accesos diferencia
 
 ![coreografía](coreografia.png)
 
+
+## Tecnología
+
+El nicho tecnológico en el cual hemos desarrollado nuestros productos es DICOMweb (DICOM sobre http) y CDA (informe médico estructurado en XML). Luego, nuestros productos son el resultado de varias iteraciones que corresponden a decisiones estratégicas en cuanto a las tecnologías subyacentes.
+
+La iteración que empezamos hace un año incluye como objetivos:
+- el uso de una nueva tecnología de parseo y serialización DICOM desarrollada por nosotros llamada DCKV (en lugar de los toolkits dcmtk y dcm4che)
+- el empaquetado docker y orquestación de micro servicios (en particular directamente desde hardware de NAS)
+- el uso de los lenguajes sh y rust (con el objetivo de evitar dependencias a objective-c, Mac OS y java)
+- Usar visualCode como herramienta principal de desarrollo.
+
+<[DCKV](https://github.com/opendicom/opendicomdoc/tree/master/1.Contextualized%20key-values)>
+
+
+
