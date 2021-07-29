@@ -1,4 +1,4 @@
-# contextualized key-values representation of dicom objects (experimental)
+# contextualized key-values representation of dicom objects
 
 Tres representaciones de los objetos DICOM están definidas en el estándar: binaria, json y xml native. Fueron diseñadas para que sea posible la traducción de cualquiera de ella en cualquiera otra. Es decir que las dos nuevas (json y xml) copian parte de la syntaxis de la representación binaria original. Vale observar además que DICOM xml y DICOM json fueron creadas por separado y requieren traducción estructurales significativas para pasar de la una a la otra.
 
@@ -16,7 +16,7 @@ La metadata DICOM no es una lista plana de atributos. Permite profundidad gracia
 Es decir que la estructura objectiva de la metadata (independientemnte de su modo de representación) es compleja en sí.
 
 
-## map: una representación mejor para DICOM?
+## map con valores de tipo array {key:[]}: ¿ una representación mejor para DICOM?
 
 Mejor en este contexto significa más sencillo de escribir, leer y modificar. Dentro de la categoria de modelos de metadatos indexados, más sencillo que JSON, solo queda "map". O sea, la correspondencia key-value dentro de una lista sin profundidad. Tal modelo está incorporado en la mayoría de los lenguajes de programación modernos, que incluyen funciones de creación, introspección y modificación.
 
@@ -49,7 +49,7 @@ se repite para cada nivel del contexto
  
 - se agrega la sigla oficial DICOM del tipo de dato del atributo (en este caso "LO", LOng string), eventualmente presentado de una información sobre el charest usado en el valor. "1100" corresponde a latin1. 
 
-El string del ejemplo puede ser usado como key json. Cuando json está transformado en map, por ejemplo en un script javascript, cualquier valor de la lista puede referenciarse con la syntaxis 
+El string del ejemplo puede ser usado como key json. Cuando json está transformado en map, por ejemplo dentro de un script javascript, cualquier valor de la lista puede referenciarse con la syntaxis 
 ```lista[key][índice del valor]```
 
 No se requiere ningún DOM para buscar un elemento de la metadata.
